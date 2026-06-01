@@ -28,6 +28,7 @@ interface MeetingMidweekProps {
 }
 
 function getMidweekIcon(partTitle: string, sectionType: 'tesouros' | 'faca-seu-melhor' | 'vida-crista') {
+  if (!partTitle) return Layers;
   const lowercase = partTitle.toLowerCase();
   
   if (sectionType === 'tesouros') {
@@ -78,7 +79,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
     );
   }
 
-  // Filtragem mecânica para manter apenas Mídias no rodapé
+  // Filtragem mecânica para manter apenas Mídias no rodapé de forma segura
   const filtradasMecanicas = mecanicas ? { midias: mecanicas.midias } as DesignacoesMecanicas : undefined;
 
   return (
@@ -145,7 +146,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
             { label: "Leitura da Bíblia", defaultTime: "4 min", key: 2, icon: BookOpen }
           ].map((cardConfig) => {
             const dadosBanco = meioSemana.tesouros?.[cardConfig.key];
-            const CustomIcon = cardConfig.icon;
+            const CustomIcon = cardConfig.icon || Compass;
 
             return (
               <div 
@@ -194,7 +195,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {meioSemana.facaSeuMelhor && meioSemana.facaSeuMelhor.length > 0 ? (
             meioSemana.facaSeuMelhor.map((faca, index) => {
-              const PartIcon = getMidweekIcon(faca.tema, 'faca-seu-melhor');
+              const PartIcon = getMidweekIcon(faca?.tema || '', 'faca-seu-melhor');
               return (
                 <div 
                   key={index} 
@@ -203,7 +204,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                 >
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#836c42] uppercase font-mono shadow-2xs">
-                      {faca.tempo || "5 min"}
+                      {faca?.tempo || "5 min"}
                     </span>
                   </div>
                   
@@ -212,7 +213,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                       <PartIcon className="w-5 h-5 shrink-0" />
                     </div>
                     <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed pt-1">
-                      {faca.tema}
+                      {faca?.tema || "Designação"}
                     </p>
                   </div>
                   
@@ -220,10 +221,10 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-[#8c744c] font-mono tracking-wider font-bold">DESIGNAÇÃO</span>
                       <strong className="text-gray-950 font-bold text-sm bg-white/85 px-2.5 py-1 rounded-md shadow-3xs font-sans">
-                        {faca.orador || "A definir"}
+                        {faca?.orador || "A definir"}
                       </strong>
                     </div>
-                    {faca.ajudante && (
+                    {faca?.ajudante && (
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-[#8c744c]/80 font-mono tracking-wider">Ajudante</span>
                         <strong className="text-gray-700 font-medium text-sm">
@@ -253,7 +254,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {meioSemana.vidaCrista && meioSemana.vidaCrista.length > 0 ? (
             meioSemana.vidaCrista.map((vida, index) => {
-              const PartIcon = getMidweekIcon(vida.tema, 'vida-crista');
+              const PartIcon = getMidweekIcon(vida?.tema || '', 'vida-crista');
               return (
                 <div 
                   key={index} 
@@ -262,7 +263,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                 >
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#6d1b19] uppercase font-mono shadow-2xs">
-                      {vida.tempo || "15 min"}
+                      {vida?.tempo || "15 min"}
                     </span>
                   </div>
                   
@@ -280,7 +281,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                   <div className="border-t border-[#EEBDBD] pt-3 flex items-center justify-between text-xs mt-auto">
                     <span className="text-[#6d1b19] font-mono tracking-wider font-bold">DIRIGENTE</span>
                     <strong className="text-gray-950 font-bold text-sm bg-white/80 px-2.5 py-1 rounded-md shadow-3xs font-sans">
-                      {vida.orador || "A definir"}
+                      {vida?.orador || "A definir"}
                     </strong>
                   </div>
                 </div>
