@@ -78,7 +78,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
     );
   }
 
-  // Filtragem mecânica para manter apenas Mídias se fornecido
+  // Filtragem mecânica para manter apenas Mídias no rodapé
   const filtradasMecanicas = mecanicas ? { midias: mecanicas.midias } as DesignacoesMecanicas : undefined;
 
   return (
@@ -90,7 +90,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
       className="space-y-8"
       id="meio-semana-programacao-view"
     >
-      {/* Overview Card - Prayers and Chairman Only (Songs Removed) */}
+      {/* Overview Card - Prayers and Chairman Only */}
       <div className="bg-slate-55 border border-slate-100 rounded-2xl p-5 bg-linear-to-br from-slate-50 to-white hover:shadow-xs transition duration-300">
         <h4 className="text-[10px] font-bold text-slate-400 tracking-wider uppercase font-mono mb-4">
           Diretrizes Gerais da Reunião
@@ -157,20 +157,16 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                   <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#2a5b64] uppercase font-mono shadow-2xs">
                     {dadosBanco?.tempo || cardConfig.defaultTime}
                   </span>
-                  {/* Canto superior direito eliminado */}
                 </div>
                 
-                <div className="flex gap-3 items-start mt-1 mb-4 flex-1">
+                <div className="flex gap-3 items-center mt-1 mb-6 flex-1">
                   <div className="p-2.5 bg-white/85 rounded-xl text-[#34727D]">
                     <CustomIcon className="w-5 h-5 shrink-0" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold font-mono tracking-wider text-[#2f6670] uppercase mb-0.5">
+                    <h4 className="text-sm font-bold text-gray-850 font-sans leading-tight">
                       {cardConfig.label}
                     </h4>
-                    <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed">
-                      {dadosBanco?.tema || "Matéria da semana"}
-                    </p>
                   </div>
                 </div>
                 
@@ -209,7 +205,6 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#836c42] uppercase font-mono shadow-2xs">
                       {faca.tempo || "5 min"}
                     </span>
-                    {/* Campo superior direito dinamicamente eliminado */}
                   </div>
                   
                   <div className="flex gap-3 items-start mt-1 mb-4 flex-1">
@@ -271,17 +266,14 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                     </span>
                   </div>
                   
-                  <div className="flex gap-3 items-start mt-1 mb-4 flex-1">
+                  <div className="flex gap-3 items-center mt-1 mb-6 flex-1">
                     <div className="p-2.5 bg-white/85 rounded-xl text-[#912421]">
                       <PartIcon className="w-5 h-5 shrink-0" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold font-mono tracking-wider text-[#731c19] uppercase mb-0.5">
+                      <h4 className="text-sm font-bold text-gray-850 font-sans leading-tight">
                         Parte {index + 1}
                       </h4>
-                      <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed">
-                        {vida.tema}
-                      </p>
                     </div>
                   </div>
                   
