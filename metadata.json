@@ -1,0 +1,6 @@
+{
+  "name": "Consulta de Designações",
+  "description": "Aplicativo web responsivo de consulta de designações para os irmãos da congregação",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
