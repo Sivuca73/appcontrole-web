@@ -271,7 +271,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </div>
         </div>
 
-                {/* Rodapé Seguro */}
+        {/* Rodapé Seguro */}
         {/* <MechanicalSupportGrid designacoes={mecanicas} /> */}
 
         <div className="p-4 bg-gray-100 text-center rounded-xl text-xs text-gray-500">
