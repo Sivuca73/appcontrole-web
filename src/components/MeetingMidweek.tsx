@@ -96,7 +96,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           Diretrizes Gerais da Reunião
         </h4>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-slate-100 rounded-lg shrink-0 mt-0.5">
               <User className="w-4 h-4 text-slate-600" />
@@ -104,22 +104,6 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
             <div>
               <span className="block text-xs text-gray-400 font-mono">PRESIDENTE</span>
               <strong className="text-slate-800 font-semibold">{meioSemana.presidente || "A definir"}</strong>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-emerald-50 rounded-lg shrink-0 mt-0.5">
-              <Music className="w-4 h-4 text-emerald-600" />
-            </div>
-            <div className="grid grid-cols-2 gap-x-4">
-              <div>
-                <span className="block text-xs text-gray-400 font-mono">CÂNTICO INICIAL</span>
-                <strong className="text-emerald-700 font-semibold">Nº {meioSemana.canticoInicial || "-"}</strong>
-              </div>
-              <div>
-                <span className="block text-xs text-gray-400 font-mono">INTERMEDIÁRIO</span>
-                <strong className="text-emerald-700 font-semibold">Nº {meioSemana.canticoIntermediario || "-"}</strong>
-              </div>
             </div>
           </div>
 
@@ -154,48 +138,64 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {meioSemana.tesouros && meioSemana.tesouros.length > 0 ? (
-            meioSemana.tesouros.map((tesouro, index) => {
-              const PartIcon = getMidweekIcon(tesouro.tema, 'tesouros');
-              return (
-                <div 
-                  key={index} 
-                  id={`tesouro-card-${index}`}
-                  className="bg-[#E4F2F4] border border-[#CDE5E9] rounded-2xl p-5 hover:scale-[1.01] transition-all duration-300 flex flex-col justify-between hover:shadow-md"
-                >
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#2a5b64] uppercase font-mono shadow-2xs">
-                      {tesouro.tempo || "10 min"}
-                    </span>
-                    {tesouro.referencia && (
-                      <span className="text-xs font-mono font-semibold text-[#2f6670] bg-white/50 px-2 py-0.5 rounded-sm">
-                        {tesouro.referencia}
-                      </span>
-                    )}
-                  </div>
-                  
-                  <div className="flex gap-3 items-start mt-1 mb-4 flex-1">
-                    <div className="p-2.5 bg-white/85 rounded-xl text-[#34727D]">
-                      <PartIcon className="w-5 h-5 shrink-0" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            {
+              titulo: "Discurso inicial",
+              tema: meioSemana.tesouros?.[0]?.tema || "A ruína da cidade sanguinária",
+              tempo: meioSemana.tesouros?.[0]?.tempo || "10 min",
+              orador: meioSemana.tesouros?.[0]?.orador || "A decidir"
+            },
+            {
+              titulo: "Joias espirituais",
+              tema: meioSemana.tesouros?.[1]?.tema || "Encontro de joias espirituais",
+              tempo: meioSemana.tesouros?.[1]?.tempo || "10 min",
+              orador: meioSemana.tesouros?.[1]?.orador || "A decidir"
+            },
+            {
+              titulo: "Leitura da Bíblia",
+              tema: meioSemana.tesouros?.[2]?.tema || "Análise e leitura bíblica semanal",
+              tempo: meioSemana.tesouros?.[2]?.tempo || "4 min",
+              orador: meioSemana.tesouros?.[2]?.orador || "A decidir"
+            }
+          ].map((tesouro, index) => {
+            const PartIcon = getMidweekIcon(tesouro.tema, 'tesouros');
+            return (
+              <div 
+                key={index} 
+                id={`tesouro-card-${index}`}
+                className="bg-[#E4F2F4] border border-[#CDE5E9] rounded-2xl p-5 hover:scale-[1.01] transition-all duration-300 flex flex-col justify-between hover:shadow-md"
+              >
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#2a5b64] uppercase font-mono shadow-2xs">
+                    {tesouro.tempo}
+                  </span>
+                  {/* Top-right scripture/reference text eliminated as requested */}
+                </div>
+                
+                <div className="mt-1 mb-4 flex-1">
+                  <h4 className="text-xs font-mono font-bold text-[#20474e] uppercase tracking-wide mb-1.5">
+                    {tesouro.titulo}
+                  </h4>
+                  <div className="flex gap-2 items-start">
+                    <div className="p-2 bg-white/85 rounded-xl text-[#34727D] shrink-0">
+                      <PartIcon className="w-4 h-4" />
                     </div>
-                    <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed pt-1">
+                    <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed pt-0.5">
                       {tesouro.tema}
                     </p>
                   </div>
-                  
-                  <div className="border-t border-[#A8D3DB] pt-3 flex items-center justify-between text-xs mt-auto">
-                    <span className="text-[#3a7c88] font-mono tracking-wider font-bold">ORADOR</span>
-                    <strong className="text-gray-950 font-bold text-sm bg-white/80 px-2.5 py-1 rounded-md shadow-3xs font-sans">
-                      {tesouro.orador || "A decidir"}
-                    </strong>
-                  </div>
                 </div>
-              );
-            })
-          ) : (
-            <p className="text-sm text-gray-400 italic">Nenhum tesouro planejado.</p>
-          )}
+                
+                <div className="border-t border-[#A8D3DB] pt-3 flex items-center justify-between text-xs mt-auto">
+                  <span className="text-[#3a7c88] font-mono tracking-wider font-bold">ORADOR</span>
+                  <strong className="text-gray-950 font-bold text-sm bg-white/80 px-2.5 py-1 rounded-md shadow-3xs font-sans">
+                    {tesouro.orador}
+                  </strong>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -222,11 +222,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#836c42] uppercase font-mono shadow-2xs">
                       {faca.tempo || "5 min"}
                     </span>
-                    {faca.referencia && (
-                      <span className="text-xs font-mono font-semibold text-[#8a7249] bg-white/50 px-2 py-0.5 rounded-sm">
-                        {faca.referencia}
-                      </span>
-                    )}
+                    {/* Top-right scripture/reference text eliminated as requested */}
                   </div>
                   
                   <div className="flex gap-3 items-start mt-1 mb-4 flex-1">
@@ -276,6 +272,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           {meioSemana.vidaCrista && meioSemana.vidaCrista.length > 0 ? (
             meioSemana.vidaCrista.map((vida, index) => {
               const PartIcon = getMidweekIcon(vida.tema, 'vida-crista');
+              const cardTitle = `Parte ${index + 1}`;
               return (
                 <div 
                   key={index} 
@@ -286,20 +283,21 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#6d1b19] uppercase font-mono shadow-2xs">
                       {vida.tempo || "15 min"}
                     </span>
-                    {vida.referencia && (
-                      <span className="text-xs font-mono font-semibold text-[#731c19] bg-white/50 px-2 py-0.5 rounded-sm">
-                        {vida.referencia}
-                      </span>
-                    )}
+                    {/* Top-right scripture/reference text eliminated as requested */}
                   </div>
                   
-                  <div className="flex gap-3 items-start mt-1 mb-4 flex-1">
-                    <div className="p-2.5 bg-white/85 rounded-xl text-[#912421]">
-                      <PartIcon className="w-5 h-5 shrink-0" />
+                  <div className="mt-1 mb-4 flex-1">
+                    <h4 className="text-xs font-mono font-bold text-[#6d1b19] uppercase tracking-wide mb-1.5">
+                      {cardTitle}
+                    </h4>
+                    <div className="flex gap-3 items-start">
+                      <div className="p-2.5 bg-white/85 rounded-xl text-[#912421]">
+                        <PartIcon className="w-5 h-5 shrink-0" />
+                      </div>
+                      <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed pt-1">
+                        {vida.tema}
+                      </p>
                     </div>
-                    <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed pt-1">
-                      {vida.tema}
-                    </p>
                   </div>
                   
                   <div className="border-t border-[#EEBDBD] pt-3 flex items-center justify-between text-xs mt-auto">
@@ -319,27 +317,21 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
               id="estudo-biblico-card"
               className="bg-[#F7DEDD] border border-[#EDC1C0] rounded-2xl p-5 hover:scale-[1.01] transition-all duration-300 flex flex-col justify-between hover:shadow-md md:col-span-2"
             >
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-[#6d1b19] uppercase font-mono shadow-2xs">
-                  Estudo de Livro
-                </span>
-                <span className="text-xs font-mono font-semibold text-[#731c19] bg-white/50 px-2 py-0.5 rounded-sm">
+              <div className="flex items-center justify-between gap-3 mb-3 shrink-0">
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-[#912421]" />
+                  <h4 className="text-sm font-bold text-gray-850 font-sans">
+                    Estudo Bíblico de Congregação
+                  </h4>
+                </div>
+                <span className="text-xs font-mono font-semibold text-[#731c19] bg-white/50 px-2 py-0.5 rounded-sm shrink-0">
                   30 min
                 </span>
               </div>
               
-              <div className="mt-1 mb-4">
-                <h4 className="text-sm font-bold text-gray-850 font-sans">
-                  Estudo Bíblico de Congregação
-                </h4>
-                {meioSemana.estudoBiblico.tema && (
-                  <p className="text-xs font-medium text-gray-500 mt-1 pl-4 border-l border-red-200">
-                    {meioSemana.estudoBiblico.tema}
-                  </p>
-                )}
-              </div>
+              {/* Eliminated description theme below as requested */}
               
-              <div className="border-t border-[#EEBDBD] pt-3 grid grid-cols-2 gap-4">
+              <div className="border-t border-[#EEBDBD] pt-3 grid grid-cols-2 gap-4 mt-2">
                 <div className="flex items-center justify-between text-xs bg-white/60 p-2 rounded-xl">
                   <span className="text-[#6d1b19] font-mono text-[9px] tracking-wider uppercase font-semibold">Dirigente</span>
                   <strong className="text-gray-950 font-bold text-xs truncate max-w-[120px] font-sans">

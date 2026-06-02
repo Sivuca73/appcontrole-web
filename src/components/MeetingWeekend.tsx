@@ -53,7 +53,7 @@ export function MeetingWeekend({ fimSemana, mecanicas }: MeetingWeekendProps) {
           Diretrizes Gerais do Fim de Semana
         </h4>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-slate-100 rounded-lg shrink-0 mt-0.5">
               <User className="w-4 h-4 text-slate-600" />
@@ -64,11 +64,11 @@ export function MeetingWeekend({ fimSemana, mecanicas }: MeetingWeekendProps) {
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-indigo-50 rounded-lg shrink-0 mt-0.5">
+          <div className="flex items-start gap-3 hidden">
+            <div className="p-2 bg-indigo-50 rounded-lg shrink-0 mt-0.5 hidden">
               <Music className="w-4 h-4 text-indigo-600" />
             </div>
-            <div className="grid grid-cols-3 gap-x-3">
+            <div className="grid grid-cols-3 gap-x-3 hidden">
               <div>
                 <span className="block text-xs text-gray-400 font-mono">INICIAL</span>
                 <strong className="text-indigo-700 font-semibold">Nº {fimSemana.canticoInicial || "-"}</strong>

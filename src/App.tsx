@@ -128,22 +128,7 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Demo badge with subtle tooltip descriptor */}
-            <button 
-              id="db-status-badge"
-              onClick={() => setShowConfigHint(!showConfigHint)}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono tracking-wide shadow-xs transition ${
-                isDemoMode 
-                  ? "bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-100" 
-                  : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-100"
-              }`}
-            >
-              <span className={`w-1.5 h-1.5 rounded-full ${isDemoMode ? "bg-amber-500 animate-pulse" : "bg-emerald-500"}`} />
-              <span className="hidden sm:inline">{currentDbStateLabel}</span>
-              <span className="sm:hidden">{isDemoMode ? "Amostra" : "Ativo"}</span>
-              <Info className="w-3 h-3 text-slate-400" />
-            </button>
-
+            {/* Reload action remains */}
             <button 
               id="reload-data-btn"
               onClick={loadData}
@@ -157,7 +142,7 @@ export default function App() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-6 md:py-10 space-y-8">
+      <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-6 md:py-10 pb-24 space-y-8">
         
         {/* Dynamic configuration helper card */}
         <AnimatePresence>
@@ -207,13 +192,6 @@ export default function App() {
                 <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 font-display" id="selected-week-title">
                   {selectedWeek ? formatWeekLabelLong(selectedWeek.labelSemana) : "Semana de Consulta"}
                 </h1>
-                
-                {selectedWeek?.temaMensal && (
-                  <p className="text-xs text-[#BE9F67] font-semibold italic flex items-center gap-1.5 font-sans">
-                    <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                    Tema do Mês: {selectedWeek.temaMensal}
-                  </p>
-                )}
               </div>
 
               {/* Discreet Week Dropdown Selector */}
@@ -281,34 +259,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* TAB SELECTOR: MEIO vs FIM DE SEMANA */}
-            <div className="bg-slate-50 p-1.5 rounded-2xl flex border border-slate-100" id="tabs-navigation">
-              <button
-                id="tab-meio-semana"
-                onClick={() => setActiveTab('meioSemana')}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold font-sans transition-all duration-300 relative ${
-                  activeTab === 'meioSemana'
-                    ? "bg-white text-slate-900 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                <Layers className={`w-4 h-4 transition ${activeTab === 'meioSemana' ? "text-[#34727D]" : "text-gray-400"}`} />
-                <span>Reunião de Meio de Semana</span>
-              </button>
 
-              <button
-                id="tab-fim-semana"
-                onClick={() => setActiveTab('fimSemana')}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold font-sans transition-all duration-300 relative ${
-                  activeTab === 'fimSemana'
-                    ? "bg-white text-slate-900 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                <Users2 className={`w-4 h-4 transition ${activeTab === 'fimSemana' ? "text-[#BE9F67]" : "text-gray-400"}`} />
-                <span>Reunião de Fim de Semana</span>
-              </button>
-            </div>
 
             {/* PRESENTATION CARD BODY */}
             <div className="pt-4" id="view-content-canvas">
@@ -336,7 +287,7 @@ export default function App() {
       <footer className="border-t border-gray-150 text-gray-400 py-8 text-xs font-sans mt-auto" id="spa-footer">
         <div className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-center sm:text-left leading-normal font-medium">
-            Associação de Testemunhas Cristãs de Jeová — Consulta de Programações.
+            Consulta de Programações.
             <span className="block text-[10px] text-gray-400 mt-0.5">Todos os direitos reservados à Congregação Local.</span>
           </p>
           <span className="px-3 py-1 bg-slate-50 border border-gray-100 rounded-lg text-[10px] font-mono hover:bg-slate-100">
@@ -344,6 +295,37 @@ export default function App() {
           </span>
         </div>
       </footer>
+
+      {/* Premium Translucent Bottom Menu Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-gray-200/80 py-3.5 z-50 flex justify-center shadow-lg" id="bottom-navigation-bar">
+        <div className="max-w-md w-full px-6 flex justify-around gap-6">
+          <button
+            id="menu-btn-meio-semana"
+            onClick={() => setActiveTab('meioSemana')}
+            className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-extrabold tracking-tight uppercase transition-all duration-300 gap-1.5 ${
+              activeTab === 'meioSemana'
+                ? "text-black scale-102 font-black"
+                : "text-gray-400 hover:text-gray-600 font-semibold"
+            }`}
+          >
+            <Layers className={`w-5 h-5 ${activeTab === 'meioSemana' ? "text-[#121212]" : "text-gray-400"}`} />
+            <span className="font-sans leading-none">Meio de Semana</span>
+          </button>
+
+          <button
+            id="menu-btn-fim-semana"
+            onClick={() => setActiveTab('fimSemana')}
+            className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-extrabold tracking-tight uppercase transition-all duration-300 gap-1.5 ${
+              activeTab === 'fimSemana'
+                ? "text-black scale-102 font-black"
+                : "text-gray-400 hover:text-gray-600 font-semibold"
+            }`}
+          >
+            <Users2 className={`w-5 h-5 ${activeTab === 'fimSemana' ? "text-[#121212]" : "text-gray-400"}`} />
+            <span className="font-sans leading-none">Fim de Semana</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
