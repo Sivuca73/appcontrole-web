@@ -85,8 +85,8 @@ export function MeetingWeekend({ fimSemana, mecanicas }: MeetingWeekendProps) {
           </div>
 
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-indigo-50 rounded-lg shrink-0 mt-0.5 font-mono text-[10px] uppercase font-bold text-indigo-600 flex items-center justify-center w-8 h-8">
-              Amém
+            <div className="p-2 bg-indigo-50 rounded-lg shrink-0 mt-0.5">
+              <UserCheck className="w-4 h-4 text-indigo-600" />
             </div>
             <div className="grid grid-cols-2 gap-x-4">
               <div>

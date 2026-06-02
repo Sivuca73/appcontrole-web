@@ -14,6 +14,7 @@ import {
   Users, 
   Music, 
   User,
+  UserCheck,
   Bookmark,
   Calendar,
   Layers
@@ -108,8 +109,8 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </div>
 
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-blue-50 rounded-lg shrink-0 mt-0.5 font-mono text-[10px] uppercase font-bold text-blue-600 flex items-center justify-center w-8 h-8">
-              Amém
+            <div className="p-2 bg-blue-50 rounded-lg shrink-0 mt-0.5">
+              <UserCheck className="w-4 h-4 text-blue-600" />
             </div>
             <div className="grid grid-cols-2 gap-x-4">
               <div>
@@ -173,18 +174,13 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                   {/* Top-right scripture/reference text eliminated as requested */}
                 </div>
                 
-                <div className="mt-1 mb-4 flex-1">
-                  <h4 className="text-xs font-mono font-bold text-[#20474e] uppercase tracking-wide mb-1.5">
-                    {tesouro.titulo}
-                  </h4>
-                  <div className="flex gap-2 items-start">
-                    <div className="p-2 bg-white/85 rounded-xl text-[#34727D] shrink-0">
-                      <PartIcon className="w-4 h-4" />
-                    </div>
-                    <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed pt-0.5">
-                      {tesouro.tema}
-                    </p>
+                <div className="mt-1 mb-4 flex-1 flex items-center gap-3">
+                  <div className="p-2.5 bg-white/85 rounded-xl text-[#34727D] shrink-0">
+                    <PartIcon className="w-5 h-5" />
                   </div>
+                  <h4 className="text-sm font-extrabold text-[#2a5b64] uppercase font-sans tracking-tight">
+                    {index === 0 ? "DISCURSO INICIAL" : index === 1 ? "JOIAS ESPIRITUAIS" : "LEITURA DA BÍBLIA"}
+                  </h4>
                 </div>
                 
                 <div className="border-t border-[#A8D3DB] pt-3 flex items-center justify-between text-xs mt-auto">
@@ -286,18 +282,13 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                     {/* Top-right scripture/reference text eliminated as requested */}
                   </div>
                   
-                  <div className="mt-1 mb-4 flex-1">
-                    <h4 className="text-xs font-mono font-bold text-[#6d1b19] uppercase tracking-wide mb-1.5">
-                      {cardTitle}
-                    </h4>
-                    <div className="flex gap-3 items-start">
-                      <div className="p-2.5 bg-white/85 rounded-xl text-[#912421]">
-                        <PartIcon className="w-5 h-5 shrink-0" />
-                      </div>
-                      <p className="text-sm font-semibold text-gray-800 font-sans leading-relaxed pt-1">
-                        {vida.tema}
-                      </p>
+                  <div className="mt-1 mb-4 flex-1 flex items-center gap-3">
+                    <div className="p-2.5 bg-white/85 rounded-xl text-[#912421] shrink-0">
+                      <PartIcon className="w-5 h-5" />
                     </div>
+                    <h4 className="text-sm font-extrabold text-[#6d1b19] uppercase font-sans tracking-tight">
+                      PARTE {index + 1}
+                    </h4>
                   </div>
                   
                   <div className="border-t border-[#EEBDBD] pt-3 flex items-center justify-between text-xs mt-auto">

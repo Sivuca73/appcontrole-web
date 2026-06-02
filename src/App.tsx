@@ -296,33 +296,39 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Premium Translucent Bottom Menu Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-gray-200/80 py-3.5 z-50 flex justify-center shadow-lg" id="bottom-navigation-bar">
-        <div className="max-w-md w-full px-6 flex justify-around gap-6">
+      {/* Premium Translucent Floating Bottom Menu Bar (Nubank Style) */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md border border-gray-200/60 rounded-full py-1.5 px-2.5 z-50 flex justify-center shadow-lg hover:shadow-xl transition-all duration-300 w-36" id="bottom-navigation-bar">
+        <div className="w-full flex justify-between gap-1">
           <button
             id="menu-btn-meio-semana"
-            onClick={() => setActiveTab('meioSemana')}
-            className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-extrabold tracking-tight uppercase transition-all duration-300 gap-1.5 ${
+            onClick={() => {
+              setActiveTab('meioSemana');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className={`w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 ${
               activeTab === 'meioSemana'
-                ? "text-black scale-102 font-black"
-                : "text-gray-400 hover:text-gray-600 font-semibold"
+                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105"
+                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50"
             }`}
+            title="Reunião de Meio de Semana"
           >
-            <Layers className={`w-5 h-5 ${activeTab === 'meioSemana' ? "text-[#121212]" : "text-gray-400"}`} />
-            <span className="font-sans leading-none">Meio de Semana</span>
+            <Layers className="w-5 h-5 transition-transform" />
           </button>
 
           <button
             id="menu-btn-fim-semana"
-            onClick={() => setActiveTab('fimSemana')}
-            className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-extrabold tracking-tight uppercase transition-all duration-300 gap-1.5 ${
+            onClick={() => {
+              setActiveTab('fimSemana');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className={`w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 ${
               activeTab === 'fimSemana'
-                ? "text-black scale-102 font-black"
-                : "text-gray-400 hover:text-gray-600 font-semibold"
+                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105"
+                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50"
             }`}
+            title="Reunião de Fim de Semana"
           >
-            <Users2 className={`w-5 h-5 ${activeTab === 'fimSemana' ? "text-[#121212]" : "text-gray-400"}`} />
-            <span className="font-sans leading-none">Fim de Semana</span>
+            <Users2 className="w-5 h-5 transition-transform" />
           </button>
         </div>
       </div>
