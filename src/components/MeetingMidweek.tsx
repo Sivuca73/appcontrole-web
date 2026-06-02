@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { SecaoVidaMinisterio, DesignacoesMecanicas } from '../types';
 
-// ADICIONADO: O import que estava faltando e causando o erro!
+// O import essencial que conecta o quadro mecânico
 import { MechanicalSupportGrid } from './MechanicalSupportGrid';
 
 interface MeetingMidweekProps {
@@ -25,7 +25,7 @@ interface MeetingMidweekProps {
 }
 
 export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
-  // 1. Verificação preventiva inicial
+  // 1. Verificação preventiva inicial para evitar carregar dados nulos
   if (!meioSemana) {
     return (
       <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-gray-100 min-h-[300px] shadow-sm">
@@ -38,7 +38,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
     );
   }
 
-  // 2. Bloco de captura global para impedir Tela Branca
+  // 2. Bloco de captura global para impedir que falhas de dados causem Tela Branca
   try {
     return (
       <div className="space-y-8" id="meio-semana-programacao-view">
@@ -235,7 +235,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
               ))
             ) : null}
 
-            {/* Congregation Bible Study Render */}
+            {/* Estudo Bíblico de Congregação */}
             {meioSemana.estudoBiblico && (
               <div className="bg-[#F7DEDD] border border-[#EDC1C0] rounded-2xl p-5 flex flex-col justify-between hover:shadow-md md:col-span-2">
                 <div className="mb-3">
@@ -272,7 +272,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </div>
         </div>
 
-        {/* Rodapé Ativado de forma segura */}
+        {/* Rodapé Dinâmico: Invoca o componente que criamos por último */}
         <MechanicalSupportGrid designacoes={mecanicas} />
       </div>
     );
