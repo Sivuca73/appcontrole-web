@@ -16,7 +16,9 @@ import {
   ChevronDown, 
   Layers, 
   Users2, 
+  Info, 
   RefreshCw,
+  Sparkles,
   BookMarked,
   ArrowRight
 } from 'lucide-react';
@@ -42,7 +44,9 @@ export default function App() {
   const [selectedWeek, setSelectedWeek] = useState<SemanaProgramacao | null>(null);
   const [activeTab, setActiveTab] = useState<'meioSemana' | 'fimSemana'>('meioSemana');
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const [showConfigHint, setShowConfigHint] = useState<boolean>(false);
   
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -60,8 +64,9 @@ export default function App() {
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const { weeks: loadedWeeks } = await fetchSchedulesFromDB();
+      const { weeks: loadedWeeks, isDemo } = await fetchSchedulesFromDB();
       setWeeks(loadedWeeks);
+      setIsDemoMode(isDemo);
       
       if (loadedWeeks.length > 0) {
         // "Inteligência de Exibição Atual" - search for current week based on 2026-06-01
@@ -100,6 +105,8 @@ export default function App() {
     return `Semana de ${label}`;
   };
 
+  const currentDbStateLabel = isDemoMode ? "Modo Demonstrativo" : "Conectado ao Realtime DB";
+
   return (
     <div className="min-h-screen bg-white text-gray-800 flex flex-col font-sans selection:bg-slate-100 selection:text-slate-900" id="spa-root">
       
@@ -121,6 +128,22 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Demo badge with subtle tooltip descriptor */}
+            <button 
+              id="db-status-badge"
+              onClick={() => setShowConfigHint(!showConfigHint)}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono tracking-wide shadow-xs transition ${
+                isDemoMode 
+                  ? "bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-100" 
+                  : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-100"
+              }`}
+            >
+              <span className={`w-1.5 h-1.5 rounded-full ${isDemoMode ? "bg-amber-500 animate-pulse" : "bg-emerald-500"}`} />
+              <span className="hidden sm:inline">{currentDbStateLabel}</span>
+              <span className="sm:hidden">{isDemoMode ? "Amostra" : "Ativo"}</span>
+              <Info className="w-3 h-3 text-slate-400" />
+            </button>
+
             <button 
               id="reload-data-btn"
               onClick={loadData}
@@ -135,6 +158,34 @@ export default function App() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-6 md:py-10 space-y-8">
+        
+        {/* Dynamic configuration helper card */}
+        <AnimatePresence>
+          {showConfigHint && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden bg-slate-50 border border-slate-200/60 rounded-2xl p-5 text-xs text-slate-600 space-y-2.5 font-sans relative"
+              id="config-hint-box"
+            >
+              <strong className="text-slate-800 block text-sm font-semibold">Configuração do Firebase</strong>
+              <p className="leading-relaxed">
+                Este aplicativo de consulta para os irmãos possui estrito acesso de <strong>apenas leitura (Read-Only)</strong>. 
+                Ele está configurado para ler da coleção de <code>/programacoes</code> no seu Firebase Realtime Database.
+              </p>
+              <p className="leading-relaxed">
+                Para apontá-lo definitivamente para o mesmo Realtime Database preenchido pelo seu AppVM de gestão administrativa, forneça as variáveis de ambiente <code>VITE_FIREBASE_API_KEY</code>, <code>VITE_FIREBASE_DATABASE_URL</code> e <code>VITE_FIREBASE_PROJECT_ID</code> nas Configurações/Secrets do seu Painel do AI Studio.
+              </p>
+              <button 
+                onClick={() => setShowConfigHint(false)}
+                className="absolute top-3 right-4 font-mono font-bold hover:text-slate-900 p-1 text-slate-400"
+              >
+                ✕
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* LOADING INDICATOR STATE */}
         {isLoading ? (
@@ -156,6 +207,13 @@ export default function App() {
                 <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 font-display" id="selected-week-title">
                   {selectedWeek ? formatWeekLabelLong(selectedWeek.labelSemana) : "Semana de Consulta"}
                 </h1>
+                
+                {selectedWeek?.temaMensal && (
+                  <p className="text-xs text-[#BE9F67] font-semibold italic flex items-center gap-1.5 font-sans">
+                    <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                    Tema do Mês: {selectedWeek.temaMensal}
+                  </p>
+                )}
               </div>
 
               {/* Discreet Week Dropdown Selector */}
@@ -206,6 +264,11 @@ export default function App() {
                                 <span className={isCurrentItem ? "font-bold text-gray-900" : "font-semibold"}>
                                   {weekItem.labelSemana}
                                 </span>
+                                {weekItem.temaMensal && (
+                                  <span className="text-[10px] text-gray-400 truncate max-w-[220px]">
+                                    {weekItem.temaMansal || weekItem.temaMensal}
+                                  </span>
+                                )}
                               </div>
                               <ArrowRight className={`w-3.5 h-3.5 transition opacity-0 group-hover:opacity-100 ${isCurrentItem ? "opacity-100 text-slate-800" : "text-gray-300"}`} />
                             </button>
@@ -273,7 +336,7 @@ export default function App() {
       <footer className="border-t border-gray-150 text-gray-400 py-8 text-xs font-sans mt-auto" id="spa-footer">
         <div className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-center sm:text-left leading-normal font-medium">
-            Consulta de Programações.
+            Associação de Testemunhas Cristãs de Jeová — Consulta de Programações.
             <span className="block text-[10px] text-gray-400 mt-0.5">Todos os direitos reservados à Congregação Local.</span>
           </p>
           <span className="px-3 py-1 bg-slate-50 border border-gray-100 rounded-lg text-[10px] font-mono hover:bg-slate-100">
