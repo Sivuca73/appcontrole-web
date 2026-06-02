@@ -271,8 +271,12 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </div>
         </div>
 
-        {/* Rodapé Seguro */}
-        <MechanicalSupportGrid designacoes={mecanicas} />
+                {/* Rodapé Seguro */}
+        {/* <MechanicalSupportGrid designacoes={mecanicas} /> */}
+
+        <div className="p-4 bg-gray-100 text-center rounded-xl text-xs text-gray-500">
+          [Teste de Isolação] Se o quadro apareceu agora, o erro está no arquivo MechanicalSupportGrid.
+        </div>
       </div>
     );
   } catch (error) {
@@ -280,7 +284,9 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
     return (
       <div className="p-6 bg-red-50 border border-red-200 text-red-800 rounded-xl max-w-md mx-auto mt-10">
         <p className="font-bold">Aviso do Sistema</p>
-        <p className="text-sm mt-1">O componente foi reiniciado de forma segura para evitar travamentos na tela.</p>
+        <p className="text-sm mt-1">
+          O componente foi reiniciado de forma segura para evitar travamentos na tela.
+        </p>
       </div>
     );
   }
