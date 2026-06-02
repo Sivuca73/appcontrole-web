@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Eye, Mic, Monitor, Pocket } from 'lucide-react';
+import { Tv, Users, Mic, Shield, UserCheck } from 'lucide-react';
 import { DesignacoesMecanicas } from '../types';
 
 interface MechanicalSupportGridProps {
@@ -12,79 +12,63 @@ interface MechanicalSupportGridProps {
 }
 
 export function MechanicalSupportGrid({ designacoes }: MechanicalSupportGridProps) {
-  if (!designacoes) {
-    return (
-      <div className="mt-8 border border-dashed border-gray-200 rounded-2xl p-6 text-center bg-gray-50/50">
-        <p className="text-sm text-gray-500 font-sans">
-          Designações mecânicas ainda não publicadas para este dia.
-        </p>
-      </div>
-    );
-  }
-
-  const items = [
-    {
-      label: "Indicador",
-      value: designacoes.indicador || "-",
-      icon: Eye,
-      bgColor: "bg-slate-50",
-      textColor: "text-slate-700",
-      iconColor: "text-slate-500",
-    },
-    {
-      label: "Microfonista",
-      value: designacoes.microfonista || "-",
-      icon: Mic,
-      bgColor: "bg-slate-50",
-      textColor: "text-slate-700",
-      iconColor: "text-slate-500",
-    },
-    {
-      label: "Palco",
-      value: designacoes.palco || "-",
-      icon: Pocket,
-      bgColor: "bg-slate-50",
-      textColor: "text-slate-700",
-      iconColor: "text-slate-500",
-    },
-    {
-      label: "Mídias / Som",
-      value: designacoes.midias || "-",
-      icon: Monitor,
-      bgColor: "bg-slate-50",
-      textColor: "text-slate-700",
-      iconColor: "text-slate-500",
-    },
-  ];
+  if (!designacoes) return null;
 
   return (
-    <div className="mt-8" id="designacoes-mecanicas-container">
-      <h3 className="text-xs font-semibold text-gray-400 tracking-wider uppercase mb-3 font-mono">
-        Designações Mecânicas & Apoio
-      </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {items.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <div 
-              key={index}
-              id={`mecanica-${item.label.toLowerCase().replace(/[^a-z]/g, '')}`}
-              className="flex items-center gap-3.5 p-3.5 rounded-xl border border-gray-100 bg-white shadow-xs hover:shadow-md transition-all duration-300 group"
-            >
-              <div className={`p-2 rounded-lg ${item.bgColor} transition-colors group-hover:bg-slate-100`}>
-                <Icon className={`w-4 h-4 ${item.iconColor}`} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <span className="block text-[10px] font-semibold text-gray-400 tracking-wide uppercase font-mono">
-                  {item.label}
-                </span>
-                <span className="block text-sm font-semibold text-gray-800 truncate font-sans">
-                  {item.value}
-                </span>
-              </div>
+    <div className="mt-8 space-y-4" id="secao-designacoes-mecanicas">
+      <div className="flex items-center gap-2 border-b border-gray-100 pb-2">
+        <div className="w-2 h-4 bg-slate-400 rounded-xs" />
+        <h3 className="text-sm font-bold text-slate-500 tracking-wider uppercase font-mono">
+          Designações Mecânicas
+        </h3>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        
+        {/* CARD ALTERADO: Apenas "Mídias" */}
+        {designacoes.midias && (
+          <div className="bg-white border border-slate-100 rounded-xl p-4 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2 text-slate-600 font-medium">
+              <Tv className="w-4 h-4 text-slate-400" />
+              <span>Mídias</span>
             </div>
-          );
-        })}
+            <strong className="text-slate-900 font-semibold">{designacoes.midias}</strong>
+          </div>
+        )}
+
+        {/* Indicador */}
+        {designacoes.indicador && (
+          <div className="bg-white border border-slate-100 rounded-xl p-4 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2 text-slate-600 font-medium">
+              <Shield className="w-4 h-4 text-slate-400" />
+              <span>Indicador</span>
+            </div>
+            <strong className="text-slate-900 font-semibold">{designacoes.indicador}</strong>
+          </div>
+        )}
+
+        {/* Microfone / Volantes */}
+        {designacoes.volantes && (
+          <div className="bg-white border border-slate-100 rounded-xl p-4 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2 text-slate-600 font-medium">
+              <Mic className="w-4 h-4 text-slate-400" />
+              <span>Volantes</span>
+            </div>
+            <strong className="text-slate-900 font-semibold">{designacoes.volantes}</strong>
+          </div>
+        )}
+
+        {/* Capitão / Outra função de apoio que você possua no types */}
+        {designacoes.capitao && (
+          <div className="bg-white border border-slate-100 rounded-xl p-4 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2 text-slate-600 font-medium">
+              <UserCheck className="w-4 h-4 text-slate-400" />
+              <span>Capitão</span>
+            </div>
+            <strong className="text-slate-900 font-semibold">{designacoes.capitao}</strong>
+          </div>
+        )}
+
       </div>
     </div>
   );
