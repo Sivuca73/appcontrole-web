@@ -8,14 +8,13 @@ import {
   BookOpen, 
   Gem, 
   Compass, 
-  Mic, 
   MessageSquare, 
   User,
   Calendar,
-  Layers,
-  Tv
+  Layers
 } from 'lucide-react';
 import { SecaoVidaMinisterio, DesignacoesMecanicas } from '../types';
+import { MechanicalSupportGrid } from './MechanicalSupportGrid';
 
 interface MeetingMidweekProps {
   key?: string;
@@ -267,18 +266,8 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </div>
         </div>
 
-        {/* Rodapé: Renderização local e segura de mídias para evitar dependência do Grid externo */}
-        {mecanicas?.midias && (
-          <div className="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2 text-slate-600 font-medium">
-              <Tv className="w-4 h-4 text-slate-550" />
-              <span>Operador de Mídias / Som</span>
-            </div>
-            <strong className="text-slate-900 bg-white px-3 py-1 rounded-md border border-slate-200 shadow-xs">
-              {mecanicas.midias}
-            </strong>
-          </div>
-        )}
+        {/* Rodapé: Retornado o envio do objeto completo de mecânicas */}
+        {mecanicas && <MechanicalSupportGrid designacoes={mecanicas} />}
       </div>
     );
   } catch (error) {
