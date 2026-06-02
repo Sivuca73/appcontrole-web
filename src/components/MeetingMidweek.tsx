@@ -23,20 +23,21 @@ interface MeetingMidweekProps {
 }
 
 export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
-  // Bloco de segurança global para evitar tela branca por dados corrompidos
-  try {
-    if (!meioSemana) {
-      return (
-        <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-gray-100 min-h-[300px] shadow-sm">
-          <Calendar className="w-12 h-12 text-cyan-700/40 mb-4" />
-          <h3 className="text-base font-bold text-gray-700 font-sans">Meio de Semana</h3>
-          <p className="text-cyan-800 font-medium max-w-sm mt-2 text-sm font-sans bg-cyan-50 px-4 py-2.5 rounded-xl border border-cyan-100">
-            Programação ainda não publicada para este dia.
-          </p>
-        </div>
-      );
-    }
+  // 1. Verificação preventiva inicial
+  if (!meioSemana) {
+    return (
+      <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-gray-100 min-h-[300px] shadow-sm">
+        <Calendar className="w-12 h-12 text-cyan-700/40 mb-4" />
+        <h3 className="text-base font-bold text-gray-700 font-sans">Meio de Semana</h3>
+        <p className="text-cyan-800 font-medium max-w-sm mt-2 text-sm font-sans bg-cyan-50 px-4 py-2.5 rounded-xl border border-cyan-100">
+          Programação ainda não publicada para este dia.
+        </p>
+      </div>
+    );
+  }
 
+  // 2. Bloco de captura global para impedir que erros de dados gerem Tela Branca
+  try {
     return (
       <div className="space-y-8" id="meio-semana-programacao-view">
         
@@ -53,7 +54,9 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
               </div>
               <div>
                 <span className="block text-xs text-gray-400 font-mono">PRESIDENTE</span>
-                <strong className="text-slate-800 font-semibold">{meioSemana?.presidente || "A definir"}</strong>
+                <strong className="text-slate-800 font-semibold">
+                  {meioSemana.presidente || "A definir"}
+                </strong>
               </div>
             </div>
 
@@ -65,13 +68,13 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                 <div>
                   <span className="block text-xs text-gray-400 font-mono">ORAÇÃO INICIAL</span>
                   <strong className="text-slate-800 font-semibold truncate block max-w-full">
-                    {meioSemana?.oracaoInicial || "A definir"}
+                    {meioSemana.oracaoInicial || "A definir"}
                   </strong>
                 </div>
                 <div>
                   <span className="block text-xs text-gray-400 font-mono">ORAÇÃO FINAL</span>
                   <strong className="text-slate-800 font-semibold truncate block max-w-full">
-                    {meioSemana?.oracaoFinal || "A definir"}
+                    {meioSemana.oracaoFinal || "A definir"}
                   </strong>
                 </div>
               </div>
@@ -94,7 +97,9 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
               { label: "Joias espirituais", defaultTime: "10 min", key: 1, icon: Gem },
               { label: "Leitura da Bíblia", defaultTime: "4 min", key: 2, icon: BookOpen }
             ].map((cardConfig) => {
-              const dadosBanco = meioSemana?.tesouros?.[cardConfig.key];
+              // Verificação ultra-segura para evitar ler posições inexistentes do array
+              const tesourosArray = meioSemana.tesouros || [];
+              const dadosBanco = tesourosArray[cardConfig.key];
               const CustomIcon = cardConfig.icon;
 
               return (
@@ -141,7 +146,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {meioSemana?.facaSeuMelhor && meioSemana.facaSeuMelhor.length > 0 ? (
+            {meioSemana.facaSeuMelhor && meioSemana.facaSeuMelhor.length > 0 ? (
               meioSemana.facaSeuMelhor.map((faca, index) => (
                 <div 
                   key={index} 
@@ -196,7 +201,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {meioSemana?.vidaCrista && meioSemana.vidaCrista.length > 0 ? (
+            {meioSemana.vidaCrista && meioSemana.vidaCrista.length > 0 ? (
               meioSemana.vidaCrista.map((vida, index) => (
                 <div 
                   key={index} 
@@ -230,7 +235,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
             ) : null}
 
             {/* Congregation Bible Study Render */}
-            {meioSemana?.estudoBiblico && (
+            {meioSemana.estudoBiblico && (
               <div className="bg-[#F7DEDD] border border-[#EDC1C0] rounded-2xl p-5 flex flex-col justify-between hover:shadow-md md:col-span-2">
                 <div className="mb-3">
                   <span className="text-xs font-mono font-semibold text-[#731c19] bg-white/50 px-2 py-0.5 rounded-sm">
@@ -251,13 +256,13 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
                   <div className="flex items-center justify-between text-xs bg-white/60 p-2 rounded-xl">
                     <span className="text-[#6d1b19] font-mono text-[9px] tracking-wider uppercase font-semibold">Dirigente</span>
                     <strong className="text-gray-950 font-bold text-xs truncate max-w-[120px] font-sans">
-                      {meioSemana.estudoBiblico?.dirigente || "A definir"}
+                      {meioSemana.estudoBiblico.dirigente || "A definir"}
                     </strong>
                   </div>
                   <div className="flex items-center justify-between text-xs bg-white/60 p-2 rounded-xl">
                     <span className="text-[#6d1b19] font-mono text-[9px] tracking-wider uppercase font-semibold">Leitor</span>
                     <strong className="text-gray-950 font-bold text-xs truncate max-w-[120px] font-sans">
-                      {meioSemana.estudoBiblico?.leitor || "A definir"}
+                      {meioSemana.estudoBiblico.leitor || "A definir"}
                     </strong>
                   </div>
                 </div>
@@ -266,16 +271,16 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
           </div>
         </div>
 
-        {/* Rodapé: Retornado o envio do objeto completo de mecânicas */}
-        {mecanicas && <MechanicalSupportGrid designacoes={mecanicas} />}
+        {/* Rodapé Seguro */}
+        <MechanicalSupportGrid designacoes={mecanicas} />
       </div>
     );
   } catch (error) {
-    console.error("Erro no MeetingMidweek:", error);
+    console.error("Erro crítico interceptado no MeetingMidweek:", error);
     return (
-      <div className="p-6 bg-red-50 border border-red-200 text-red-800 rounded-xl">
-        <p className="font-bold">Aviso no Quadro Virtual</p>
-        <p className="text-sm mt-1">Houve um erro de dados, mas a tela foi preservada. Verifique os campos cadastrados.</p>
+      <div className="p-6 bg-red-50 border border-red-200 text-red-800 rounded-xl max-w-md mx-auto mt-10">
+        <p className="font-bold">Aviso do Sistema</p>
+        <p className="text-sm mt-1">O componente foi reiniciado de forma segura para evitar travamentos na tela.</p>
       </div>
     );
   }
