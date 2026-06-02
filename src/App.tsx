@@ -284,7 +284,8 @@ export default function App() {
       </main>
 
       {/* Humble Elegant footer */}
-      <footer className="border-t border-gray-150 text-gray-400 py-8 text-xs font-sans mt-auto" id="spa-footer">
+      {/* Footer */}
+      <footer className="border-t border-gray-150 text-gray-400 pt-8 pb-32 text-xs font-sans mt-auto" id="spa-footer">
         <div className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-center sm:text-left leading-normal font-medium">
             Consulta de Programações.
@@ -297,7 +298,7 @@ export default function App() {
       </footer>
 
       {/* Premium Translucent Floating Bottom Menu Bar (Nubank Style) */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md border border-gray-200/60 rounded-full py-1.5 px-2.5 z-50 flex justify-center shadow-lg hover:shadow-xl transition-all duration-300 w-36" id="bottom-navigation-bar">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/40 backdrop-blur-md border border-gray-200/60 rounded-full py-1.5 px-2.5 z-50 flex justify-center shadow-lg hover:shadow-xl transition-all duration-300 w-36" id="bottom-navigation-bar">
         <div className="w-full flex justify-between gap-1">
           <button
             id="menu-btn-meio-semana"
