@@ -11,6 +11,7 @@ import {
 import { SemanaProgramacao } from './types';
 import { MeetingMidweek } from './components/MeetingMidweek';
 import { MeetingWeekend } from './components/MeetingWeekend';
+import { MechanicalSupportGrid } from './components/MechanicalSupportGrid';
 import { 
   CalendarDays, 
   ChevronDown, 
@@ -18,7 +19,8 @@ import {
   Users2, 
   RefreshCw,
   BookMarked,
-  ArrowRight
+  ArrowRight,
+  Monitor
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
@@ -40,7 +42,7 @@ function getMondayOfCurrentWeek(): string {
 export default function App() {
   const [weeks, setWeeks] = useState<SemanaProgramacao[]>([]);
   const [selectedWeek, setSelectedWeek] = useState<SemanaProgramacao | null>(null);
-  const [activeTab, setActiveTab] = useState<'meioSemana' | 'fimSemana'>('meioSemana');
+  const [activeTab, setActiveTab] = useState<'meioSemana' | 'fimSemana' | 'mecanica'>('meioSemana');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -253,11 +255,16 @@ export default function App() {
                     mecanicas={selectedWeek?.publicadoMeioSemana ? selectedWeek.mecanicasMeioSemana : undefined}
                     isVisitaSuperintendente={selectedWeek?.isVisitaSuperintendente || false}
                   />
-                ) : (
+                ) : activeTab === 'fimSemana' ? (
                   <MeetingWeekend 
                     key="weekend-content"
                     fimSemana={selectedWeek?.publicadoFimSemana ? selectedWeek.fimSemana : undefined}
                     mecanicas={selectedWeek?.publicadoFimSemana ? selectedWeek.mecanicasFimSemana : undefined}
+                  />
+                ) : (
+                  <MechanicalSupportGrid
+                    key="mecanica-content"
+                    mecanicaMensal={selectedWeek?.mecanicaMensal}
                   />
                 )}
               </AnimatePresence>
@@ -279,8 +286,8 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Premium Translucent Floating Bottom Menu Bar */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/40 backdrop-blur-md border border-gray-200/60 rounded-full py-1.5 px-2.5 z-50 flex justify-center shadow-lg hover:shadow-xl transition-all duration-300 w-36" id="bottom-navigation-bar">
+      {/* Premium Translucent Floating Bottom Menu Bar - 3 Tabs Minimalist */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/40 backdrop-blur-md border border-gray-200/60 rounded-full py-1.5 px-2.5 z-50 flex justify-center shadow-lg hover:shadow-xl transition-all duration-300 w-52" id="bottom-navigation-bar">
         <div className="w-full flex justify-between gap-1">
           <button
             id="menu-btn-meio-semana"
@@ -312,6 +319,22 @@ export default function App() {
             title="Reunião de Fim de Semana"
           >
             <Users2 className="w-5 h-5 transition-transform" />
+          </button>
+
+          <button
+            id="menu-btn-mecanica"
+            onClick={() => {
+              setActiveTab('mecanica');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className={`w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 ${
+              activeTab === 'mecanica'
+                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105"
+                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50"
+            }`}
+            title="Apoio Técnico e Limpeza"
+          >
+            <Monitor className="w-5 h-5 transition-transform" />
           </button>
         </div>
       </div>
