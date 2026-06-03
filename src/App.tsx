@@ -11,13 +11,15 @@ import {
 import { SemanaProgramacao } from './types';
 import { MeetingMidweek } from './components/MeetingMidweek';
 import { MeetingWeekend } from './components/MeetingWeekend';
-import { MechanicalSupportGrid } from './components/MechanicalSupportGrid';
+import { MonthlySupportGrid } from './components/MechanicalSupportGrid';
 import { 
   CalendarDays, 
   ChevronDown, 
   Layers, 
   Users2, 
+  Info, 
   RefreshCw,
+  Sparkles,
   BookMarked,
   ArrowRight,
   Monitor
@@ -105,6 +107,8 @@ export default function App() {
     return `Semana de ${label}`;
   };
 
+  const currentDbStateLabel = isDemoMode ? "Modo Demonstrativo" : "Conectado ao Realtime DB";
+
   return (
     <div className="min-h-screen bg-white text-gray-800 flex flex-col font-sans selection:bg-slate-100 selection:text-slate-900" id="spa-root">
       
@@ -126,6 +130,7 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Reload action remains */}
             <button 
               id="reload-data-btn"
               onClick={loadData}
@@ -141,6 +146,7 @@ export default function App() {
       {/* Main Container */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-6 md:py-10 pb-24 space-y-8">
         
+        {/* Dynamic configuration helper card */}
         <AnimatePresence>
           {showConfigHint && (
             <motion.div 
@@ -152,7 +158,11 @@ export default function App() {
             >
               <strong className="text-slate-800 block text-sm font-semibold">Configuração do Firebase</strong>
               <p className="leading-relaxed">
-                Este aplicativo de consulta possui estrito acesso de <strong>apenas leitura (Read-Only)</strong>. 
+                Este aplicativo de consulta para os irmãos possui estrito acesso de <strong>apenas leitura (Read-Only)</strong>. 
+                Ele está configurado para ler da coleção de <code>/programacoes</code> no seu Firebase Realtime Database.
+              </p>
+              <p className="leading-relaxed">
+                Para apontá-lo definitivamente para o mesmo Realtime Database preenchido pelo seu AppVM de gestão administrativa, forneça as variáveis de ambiente <code>VITE_FIREBASE_API_KEY</code>, <code>VITE_FIREBASE_DATABASE_URL</code> e <code>VITE_FIREBASE_PROJECT_ID</code> nas Configurações/Secrets do seu Painel do AI Studio.
               </p>
               <button 
                 onClick={() => setShowConfigHint(false)}
@@ -180,6 +190,7 @@ export default function App() {
                   Programação Congregacional
                 </span>
                 
+                {/* Dynamically configured format title */}
                 <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 font-display" id="selected-week-title">
                   {selectedWeek ? formatWeekLabelLong(selectedWeek.labelSemana) : "Semana de Consulta"}
                 </h1>
@@ -233,6 +244,11 @@ export default function App() {
                                 <span className={isCurrentItem ? "font-bold text-gray-900" : "font-semibold"}>
                                   {weekItem.labelSemana}
                                 </span>
+                                {weekItem.temaMensal && (
+                                  <span className="text-[10px] text-gray-400 truncate max-w-[220px]">
+                                    {weekItem.temaMansal || weekItem.temaMensal}
+                                  </span>
+                                )}
                               </div>
                               <ArrowRight className={`w-3.5 h-3.5 transition opacity-0 group-hover:opacity-100 ${isCurrentItem ? "opacity-100 text-slate-800" : "text-gray-300"}`} />
                             </button>
@@ -245,6 +261,8 @@ export default function App() {
               </div>
             </div>
 
+
+
             {/* PRESENTATION CARD BODY */}
             <div className="pt-4" id="view-content-canvas">
               <AnimatePresence mode="wait">
@@ -253,7 +271,6 @@ export default function App() {
                     key="midweek-content"
                     meioSemana={selectedWeek?.publicadoMeioSemana ? selectedWeek.meioSemana : undefined}
                     mecanicas={selectedWeek?.publicadoMeioSemana ? selectedWeek.mecanicasMeioSemana : undefined}
-                    isVisitaSuperintendente={selectedWeek?.isVisitaSuperintendente || false}
                   />
                 ) : activeTab === 'fimSemana' ? (
                   <MeetingWeekend 
@@ -262,7 +279,7 @@ export default function App() {
                     mecanicas={selectedWeek?.publicadoFimSemana ? selectedWeek.mecanicasFimSemana : undefined}
                   />
                 ) : (
-                  <MechanicalSupportGrid
+                  <MonthlySupportGrid
                     key="mecanica-content"
                     mecanicaMensal={selectedWeek?.mecanicaMensal}
                   />
@@ -273,6 +290,7 @@ export default function App() {
         )}
       </main>
 
+      {/* Humble Elegant footer */}
       {/* Footer */}
       <footer className="border-t border-gray-150 text-gray-400 pt-8 pb-32 text-xs font-sans mt-auto" id="spa-footer">
         <div className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -286,7 +304,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Premium Translucent Floating Bottom Menu Bar - 3 Tabs Minimalist */}
+      {/* Premium Translucent Floating Bottom Menu Bar - 3 Tabs (No text) (Nubank Style) */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/40 backdrop-blur-md border border-gray-200/60 rounded-full py-1.5 px-2.5 z-50 flex justify-center shadow-lg hover:shadow-xl transition-all duration-300 w-52" id="bottom-navigation-bar">
         <div className="w-full flex justify-between gap-1">
           <button
@@ -297,8 +315,8 @@ export default function App() {
             }}
             className={`w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 ${
               activeTab === 'meioSemana'
-                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105"
-                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50"
+                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105 font-bold"
+                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50/50"
             }`}
             title="Reunião de Meio de Semana"
           >
@@ -313,8 +331,8 @@ export default function App() {
             }}
             className={`w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 ${
               activeTab === 'fimSemana'
-                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105"
-                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50"
+                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105 font-bold"
+                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50/50"
             }`}
             title="Reunião de Fim de Semana"
           >
@@ -329,10 +347,10 @@ export default function App() {
             }}
             className={`w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 ${
               activeTab === 'mecanica'
-                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105"
-                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50"
+                ? "bg-[#820ad1]/10 text-[#820ad1] scale-105 font-bold"
+                : "text-gray-400 hover:text-gray-600 hover:bg-slate-50/50"
             }`}
-            title="Apoio Técnico e Limpeza"
+            title="Apoio Técnico e Mecânica"
           >
             <Monitor className="w-5 h-5 transition-transform" />
           </button>
@@ -340,4 +358,4 @@ export default function App() {
       </div>
     </div>
   );
-} 
+}

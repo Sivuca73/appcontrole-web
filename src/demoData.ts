@@ -177,6 +177,41 @@ export const DEMO_WEEKS: SemanaProgramacao[] = [
       microfonista: "Daniel Costa e Marcelo Santos",
       palco: "Renato Cruz",
       midias: "Lucas Ferreira"
+    },
+    mecanicaMensal: {
+      mesLabel: "Junho de 2026",
+      semanas: [
+        {
+          labelSemana: "01/06 a 07/06",
+          audioVideo: "Felipe Guedes",
+          indicador1: "Daniel Costa",
+          volante1: "André Silva"
+        },
+        {
+          labelSemana: "08/06 a 14/06",
+          audioVideo: "Maurício Neves",
+          indicador1: "Jefferson Lima",
+          volante1: "Marcelo Santos"
+        },
+        {
+          labelSemana: "15/06 a 21/06",
+          audioVideo: "Lucas Ferreira",
+          indicador1: "Diego Sousa",
+          volante1: "Gabriel Nunes"
+        },
+        {
+          labelSemana: "22/06 a 28/06",
+          audioVideo: "Samuel Batista",
+          indicador1: "Mateus Borges",
+          volante1: "Sandro Azevedo"
+        }
+      ],
+      limpeza: [
+        { labelSemana: "01/06 a 07/06", grupo: "Grupo 1 — Salão e Banheiros" },
+        { labelSemana: "08/06 a 14/06", grupo: "Grupo 2 — Palco e Cadeiras" },
+        { labelSemana: "15/06 a 21/06", grupo: "Grupo 3 — Vidros e Quintal" },
+        { labelSemana: "22/06 a 28/06", grupo: "Grupo 4 — Biblioteca e Som" }
+      ]
     }
   },
   {
@@ -259,6 +294,41 @@ export const DEMO_WEEKS: SemanaProgramacao[] = [
       microfonista: "Diego Sousa e André Silva",
       palco: "Felipe Guedes",
       midias: "Lucas Ferreira"
+    },
+    mecanicaMensal: {
+      mesLabel: "Junho de 2026",
+      semanas: [
+        {
+          labelSemana: "01/06 a 07/06",
+          audioVideo: "Felipe Guedes",
+          indicador1: "Daniel Costa",
+          volante1: "André Silva"
+        },
+        {
+          labelSemana: "08/06 a 14/06",
+          audioVideo: "Maurício Neves",
+          indicador1: "Jefferson Lima",
+          volante1: "Marcelo Santos"
+        },
+        {
+          labelSemana: "15/06 a 21/06",
+          audioVideo: "Lucas Ferreira",
+          indicador1: "Diego Sousa",
+          volante1: "Gabriel Nunes"
+        },
+        {
+          labelSemana: "22/06 a 28/06",
+          audioVideo: "Samuel Batista",
+          indicador1: "Mateus Borges",
+          volante1: "Sandro Azevedo"
+        }
+      ],
+      limpeza: [
+        { labelSemana: "01/06 a 07/06", grupo: "Grupo 1 — Salão e Banheiros" },
+        { labelSemana: "08/06 a 14/06", grupo: "Grupo 2 — Palco e Cadeiras" },
+        { labelSemana: "15/06 a 21/06", grupo: "Grupo 3 — Vidros e Quintal" },
+        { labelSemana: "22/06 a 28/06", grupo: "Grupo 4 — Biblioteca e Som" }
+      ]
     }
   },
   {

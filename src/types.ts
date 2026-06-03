@@ -62,10 +62,23 @@ export interface DesignacoesMecanicas {
   midias: string; // e.g. "Som/Vídeo" operator
 }
 
+export interface DetalheSemanaMecanica {
+  labelSemana: string;
+  audioVideo: string; 
+  indicador1: string;
+  volante1: string;
+}
+
+export interface DetalheLimpeza {
+  labelSemana: string;
+  grupo: string;
+}
+
 export interface SemanaProgramacao {
   id: string; // e.g., "2026-06-01" (start date of the week)
   labelSemana: string; // e.g. "01 a 07 de Junho, 2026"
   temaMensal?: string;
+  isVisitaSuperintendente?: boolean;
   
   // Meeting schedules
   meioSemana?: SecaoVidaMinisterio;
@@ -74,6 +87,12 @@ export interface SemanaProgramacao {
   // Mechanical support for each event
   mecanicasMeioSemana?: DesignacoesMecanicas;
   mecanicasFimSemana?: DesignacoesMecanicas;
+  
+  mecanicaMensal?: {
+    mesLabel: string;
+    semanas: DetalheSemanaMecanica[];
+    limpeza: DetalheLimpeza[];
+  };
   
   publicadoMeioSemana: boolean;
   publicadoFimSemana: boolean;
