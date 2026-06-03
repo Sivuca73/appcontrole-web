@@ -4,150 +4,127 @@
  */
 
 import React from 'react';
-import { Shield, Mic, Layers, Tv, Sliders, CheckCircle2 } from 'lucide-react';
-import { DesignacoesMecanicas } from '../types';
+import { Monitor, Trash2, Calendar } from 'lucide-react';
 
-interface MechanicalSupportGridProps {
-  designacoes?: DesignacoesMecanicas;
+interface DetalheSemanaMecanica {
+  labelSemana: string;
+  audioVideo: string; // Unificado em uma única propriedade
+  indicador1: string;
+  volante1: string;
 }
 
-export function MechanicalSupportGrid({ designacoes }: MechanicalSupportGridProps) {
-  if (!designacoes) {
+interface DetalheLimpeza {
+  labelSemana: string;
+  grupo: string;
+}
+
+interface MechanicalSupportGridProps {
+  mecanicaMensal?: {
+    mesLabel: string;
+    semanas: DetalheSemanaMecanica[];
+    limpeza: DetalheLimpeza[];
+  };
+}
+
+export function MechanicalSupportGrid({ mecanicaMensal }: MechanicalSupportGridProps) {
+  if (!mecanicaMensal || !mecanicaMensal.semanas) {
     return (
-      <div className="mt-8 border border-dashed border-gray-205 rounded-3xl p-8 text-center bg-gray-50/50" id="designacoes-mecanicas-container">
-        <p className="text-sm text-gray-400 font-medium font-sans">
-          Designações mecânicas ainda não publicadas para este dia.
+      <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-gray-100 min-h-[300px] shadow-sm">
+        <Monitor className="w-12 h-12 text-purple-700/40 mb-4" />
+        <h3 className="text-base font-bold text-gray-700 font-sans">Apoio Técnico & Quadro Mecânico</h3>
+        <p className="text-purple-800 font-medium max-w-sm mt-2 text-sm font-sans bg-purple-50 px-4 py-2.5 rounded-xl border border-purple-100">
+          Escala mensal de apoio técnico e limpeza não publicada para este período.
         </p>
       </div>
     );
   }
 
-  const items = [
-    {
-      label: "Indicador",
-      value: designacoes.indicador || "-",
-      description: "Recepção calorosa dos convidados e organização no auditório principal.",
-      icon: Shield,
-      accentColor: "from-blue-500/8 to-indigo-500/4",
-      borderColor: "border-blue-100/60",
-      iconColor: "text-blue-600",
-      textColor: "text-blue-950",
-      badgeColor: "bg-blue-100/60 text-blue-800",
-    },
-    {
-      label: "Microfonista",
-      value: designacoes.microfonista2 
-        ? `${designacoes.microfonista} e ${designacoes.microfonista2}`
-        : (designacoes.microfonista || "-"),
-      description: "Circulação ágil e atenciosa dos microfones para os comentários da congregação.",
-      icon: Mic,
-      accentColor: "from-teal-500/8 to-emerald-500/4",
-      borderColor: "border-teal-100/60",
-      iconColor: "text-teal-600",
-      textColor: "text-teal-950",
-      badgeColor: "bg-teal-100/60 text-teal-800",
-    },
-    {
-      label: "Palco / Tribuna",
-      value: designacoes.palco || "-",
-      description: "Apoio geral no palanque, ajuste dos displays e suporte aos oradores oficiais.",
-      icon: Layers,
-      accentColor: "from-amber-500/8 to-orange-500/4",
-      borderColor: "border-amber-100/60",
-      iconColor: "text-amber-600",
-      textColor: "text-amber-950",
-      badgeColor: "bg-amber-100/60 text-amber-800",
-    },
-    {
-      label: "Mídias / Som",
-      value: designacoes.midias || "-",
-      description: "Controle da mesa de som, projeção de mídias, transmissão online e gravação.",
-      icon: Tv,
-      accentColor: "from-purple-500/8 to-fuchsia-500/4",
-      borderColor: "border-purple-100/60",
-      iconColor: "text-purple-600",
-      textColor: "text-purple-950",
-      badgeColor: "bg-purple-100/60 text-purple-800",
-    },
-  ];
-
   return (
-    <div className="mt-8 transition-all duration-300" id="designacoes-mecanicas-container">
-      {/* Elegant overarching card container */}
-      <div className="bg-white border border-gray-150 rounded-3xl p-6 md:p-8 shadow-xs hover:shadow-xs transition-all duration-300 relative overflow-hidden">
-        
-        {/* Abstract background decors */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full blur-2xl -mr-16 -mt-16 opacity-60 pointer-events-none" />
-        <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-slate-50 rounded-full blur-3xl opacity-60 pointer-events-none" />
-
-        {/* Card Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-gray-100 mb-6">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-slate-900 text-white rounded-2xl shadow-xs shrink-0 flex items-center justify-center">
-              <Sliders className="w-5 h-5 animate-pulse" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-gray-800 tracking-tight font-sans">
-                Apoio Técnico e Mecânica
-              </h3>
-              <p className="text-xs text-gray-400 font-sans mt-0.5">
-                Voluntários dedicados à operação harmônica do Salão do Reino
-              </p>
-            </div>
-          </div>
-          
-          <div className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1 bg-emerald-50 text-emerald-800 rounded-full text-[10px] font-bold font-mono tracking-wider uppercase border border-emerald-100 shadow-3xs">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            Escala Ativa
-          </div>
+    <div className="space-y-8" id="quadro-mecanico-mensal-view">
+      
+      {/* CABEÇALHO DO MÊS */}
+      <div className="bg-slate-900 rounded-2xl p-6 text-white shadow-sm flex items-center justify-between">
+        <div>
+          <span className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">PROGRAMAÇÃO MENSAL</span>
+          <h2 className="text-2xl font-bold tracking-tight font-sans mt-0.5">{mecanicaMensal.mesLabel}</h2>
         </div>
+        <Calendar className="w-8 h-8 text-slate-400 opacity-60" />
+      </div>
 
-        {/* Dashboard Grid - 2 Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {items.map((item, index) => {
-            const Icon = item.icon;
-            const itemHtmlId = `mecanica-${item.label.toLowerCase().replace(/[^a-z]/g, '')}`;
-            
-            return (
-              <div 
-                key={index}
-                id={itemHtmlId}
-                className={`relative group bg-linear-to-br ${item.accentColor} border ${item.borderColor} rounded-2xl p-4.5 hover:scale-[1.01] hover:shadow-xs transition-all duration-300 flex items-start gap-4`}
-              >
-                {/* Colored Icon Badge */}
-                <div className={`p-3 bg-white rounded-xl ${item.iconColor} shadow-3xs shrink-0 transition-transform duration-300 group-hover:scale-105`}>
-                  <Icon className="w-5 h-5" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* COLUNA: APOIO TÉCNICO E MECÂNICA */}
+        <div className="lg:col-span-2 space-y-4">
+          <div className="flex items-center gap-2 border-b border-gray-100 pb-2">
+            <div className="w-2.5 h-6 bg-purple-700 rounded-sm" />
+            <h3 className="text-lg font-bold text-purple-900 tracking-tight font-sans">
+              Apoio Técnico e Mecânica
+            </h3>
+          </div>
+
+          <div className="space-y-4">
+            {mecanicaMensal.semanas.map((semana, idx) => (
+              <div key={idx} className="bg-white border border-slate-100 rounded-2xl p-5 hover:shadow-md transition duration-300">
+                <div className="bg-purple-50 text-purple-900 font-mono text-xs font-bold px-3 py-1.5 rounded-lg inline-block mb-4">
+                  Semana: {semana.labelSemana}
                 </div>
 
-                {/* Info Text Stack */}
-                <div className="space-y-1.5 flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span className="text-[10px] font-mono tracking-wider font-extrabold text-slate-500 uppercase">
-                      {item.label}
-                    </span>
-                    <span className={`inline-block px-2 py-0.5 rounded text-[9px] font-bold tracking-wide font-mono ${item.badgeColor}`}>
-                      Ativo
-                    </span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                  {/* Áudio e Vídeo Centralizados */}
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
+                    <span className="text-gray-400 font-mono block mb-1">ÁUDIO E VÍDEO</span>
+                    <strong className="text-slate-900 font-bold text-sm">{semana.audioVideo || "—"}</strong>
                   </div>
 
-                  <h4 className={`text-base font-bold truncate tracking-tight ${item.textColor} font-sans`}>
-                    {item.value}
-                  </h4>
+                  {/* Indicador */}
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
+                    <span className="text-gray-400 font-mono block mb-1">INDICADOR</span>
+                    <strong className="text-slate-900 font-bold text-sm block">
+                      {semana.indicador1 || "—"}
+                    </strong>
+                  </div>
 
-                  <p className="text-xs text-slate-500/90 leading-relaxed font-sans">
-                    {item.description}
-                  </p>
+                  {/* Volante */}
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
+                    <span className="text-gray-400 font-mono block mb-1">VOLANTE</span>
+                    <strong className="text-slate-900 font-bold text-sm block">
+                      {semana.volante1 || "—"}
+                    </strong>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
-        {/* Informational small footer within the support card */}
-        <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400 font-sans flex-wrap gap-2">
-          <span>Seu serviço a Jeová é feito de toda a alma.</span>
-          <span className="font-mono text-[100%]">Colossenses 3:23</span>
+        {/* COLUNA: LIMPEZA DO SALÃO DO REINO */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 border-b border-gray-100 pb-2">
+            <div className="w-2.5 h-6 bg-emerald-600 rounded-sm" />
+            <h3 className="text-lg font-bold text-emerald-900 tracking-tight font-sans">
+              Limpeza do Salão do Reino
+            </h3>
+          </div>
+
+          <div className="space-y-3">
+            {mecanicaMensal.limpeza && mecanicaMensal.limpeza.map((item, idx) => (
+              <div key={idx} className="bg-emerald-50/40 border border-emerald-100 rounded-2xl p-4 flex items-center justify-between hover:bg-emerald-50 transition duration-200">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[10px] font-mono font-bold text-emerald-700/80 uppercase">
+                    SEMANA {item.labelSemana}
+                  </span>
+                  <strong className="text-slate-900 font-bold text-sm font-sans">
+                    {item.grupo || "Grupo a definir"}
+                  </strong>
+                </div>
+                <div className="p-2 bg-white rounded-xl text-emerald-600 border border-emerald-100">
+                  <Trash2 className="w-4 h-4" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+
       </div>
     </div>
   );
