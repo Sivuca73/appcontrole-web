@@ -101,6 +101,13 @@ export function MonthlySupportGrid({ mecanicaMensal }: MonthlySupportGridProps) 
             <h3 className="text-lg font-bold text-slate-800 tracking-tight font-sans">Apoio Técnico e Mecânica</h3>
           </div>
 
+          <div className="bg-[#820ad1]/5 border border-[#820ad1]/15 rounded-xl p-3.5 flex items-start gap-2.5 text-xs text-[#820ad1] font-sans">
+            <HelpCircle className="w-4 h-4 text-[#820ad1] shrink-0 mt-0.5" />
+            <div>
+              <strong>Aviso sobre Escala Dupla:</strong> Estas designações de apoio são válidas tanto para as reuniões de <strong>terça quanto de sábado</strong>. Os mesmos irmãos terão as mesmas atribuições em ambos os dias.
+            </div>
+          </div>
+
           <div className="space-y-4">
             {mecanicaMensal.semanas.map((semana, idx) => (
               <div key={idx} className="bg-white border border-slate-100 rounded-2xl p-5 hover:shadow-xs transition duration-300">
@@ -108,20 +115,25 @@ export function MonthlySupportGrid({ mecanicaMensal }: MonthlySupportGridProps) 
                   Semana: {semana.labelSemana}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-sans">
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
-                    <span className="text-gray-400 font-mono block mb-1 uppercase tracking-wider text-[9px] font-bold">Áudio e Vídeo</span>
-                    <strong className="text-slate-900 font-bold text-base">{semana.audioVideo || "—"}</strong>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-sans">
+                  <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100/60 flex flex-col justify-between">
+                    <span className="text-gray-400 font-mono block mb-1 uppercase tracking-wider text-[8px] font-bold">Áudio e Vídeo</span>
+                    <strong className="text-slate-900 font-bold text-sm">{semana.audioVideo || "—"}</strong>
                   </div>
 
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
-                    <span className="text-gray-400 font-mono block mb-1 uppercase tracking-wider text-[9px] font-bold">Indicador</span>
-                    <strong className="text-slate-900 font-bold text-base block">{semana.indicador1 || "—"}</strong>
+                  <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100/60 flex flex-col justify-between">
+                    <span className="text-gray-400 font-mono block mb-1 uppercase tracking-wider text-[8px] font-bold">Indicador</span>
+                    <strong className="text-slate-900 font-bold text-sm block">{semana.indicador1 || "—"}</strong>
                   </div>
 
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100/60">
-                    <span className="text-gray-400 font-mono block mb-1 uppercase tracking-wider text-[9px] font-bold">Volante</span>
-                    <strong className="text-slate-900 font-bold text-base block">{semana.volante1 || "—"}</strong>
+                  <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100/60 flex flex-col justify-between">
+                    <span className="text-gray-400 font-mono block mb-1 uppercase tracking-wider text-[8px] font-bold">Volante</span>
+                    <strong className="text-slate-900 font-bold text-sm block">{semana.volante1 || "—"}</strong>
+                  </div>
+
+                  <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100/60 flex flex-col justify-between">
+                    <span className="text-gray-400 font-mono block mb-1 uppercase tracking-wider text-[8px] font-bold">Palco</span>
+                    <strong className="text-slate-900 font-bold text-sm block">{semana.palco || "—"}</strong>
                   </div>
                 </div>
               </div>

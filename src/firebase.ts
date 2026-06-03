@@ -96,14 +96,14 @@ export function getFbDatabase() {
 
 /**
  * Fetches all schedules from the /programacoes path of the Realtime Database.
- * If Firebase is not configured or in case of error, it falls back to DEMO_WEEKS.
+ * Pulls strictly from the Realtime Database to fill the board.
  */
 export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao[]; isDemo: boolean }> {
   const db = getFbDatabase();
   
   if (!db) {
-    console.log("Firebase not configured. Falling back to high-fidelity demo program.");
-    return { weeks: DEMO_WEEKS, isDemo: true };
+    console.log("Firebase not configured. Returning empty schedule list.");
+    return { weeks: [], isDemo: false };
   }
   
   try {
@@ -136,10 +136,10 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
       }
     }
     
-    console.log("No data found at /programacoes path. Using high-fidelity demo program.");
-    return { weeks: DEMO_WEEKS, isDemo: true };
+    console.log("No data found at /programacoes path.");
+    return { weeks: [], isDemo: false };
   } catch (error) {
     console.error("Error fetching from Realtime Database:", error);
-    return { weeks: DEMO_WEEKS, isDemo: true };
+    return { weeks: [], isDemo: false };
   }
 }

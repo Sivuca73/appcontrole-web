@@ -185,25 +185,29 @@ export const DEMO_WEEKS: SemanaProgramacao[] = [
           labelSemana: "01/06 a 07/06",
           audioVideo: "Felipe Guedes",
           indicador1: "Daniel Costa",
-          volante1: "André Silva"
+          volante1: "André Silva",
+          palco: "Thiago Ramos"
         },
         {
           labelSemana: "08/06 a 14/06",
           audioVideo: "Maurício Neves",
           indicador1: "Jefferson Lima",
-          volante1: "Marcelo Santos"
+          volante1: "Marcelo Santos",
+          palco: "Renato Cruz"
         },
         {
           labelSemana: "15/06 a 21/06",
           audioVideo: "Lucas Ferreira",
           indicador1: "Diego Sousa",
-          volante1: "Gabriel Nunes"
+          volante1: "Gabriel Nunes",
+          palco: "Daniel Costa"
         },
         {
           labelSemana: "22/06 a 28/06",
           audioVideo: "Samuel Batista",
           indicador1: "Mateus Borges",
-          volante1: "Sandro Azevedo"
+          volante1: "Sandro Azevedo",
+          palco: "Felipe Guedes"
         }
       ],
       limpeza: [
@@ -302,25 +306,29 @@ export const DEMO_WEEKS: SemanaProgramacao[] = [
           labelSemana: "01/06 a 07/06",
           audioVideo: "Felipe Guedes",
           indicador1: "Daniel Costa",
-          volante1: "André Silva"
+          volante1: "André Silva",
+          palco: "Thiago Ramos"
         },
         {
           labelSemana: "08/06 a 14/06",
           audioVideo: "Maurício Neves",
           indicador1: "Jefferson Lima",
-          volante1: "Marcelo Santos"
+          volante1: "Marcelo Santos",
+          palco: "Renato Cruz"
         },
         {
           labelSemana: "15/06 a 21/06",
           audioVideo: "Lucas Ferreira",
           indicador1: "Diego Sousa",
-          volante1: "Gabriel Nunes"
+          volante1: "Gabriel Nunes",
+          palco: "Daniel Costa"
         },
         {
           labelSemana: "22/06 a 28/06",
           audioVideo: "Samuel Batista",
           indicador1: "Mateus Borges",
-          volante1: "Sandro Azevedo"
+          volante1: "Sandro Azevedo",
+          palco: "Felipe Guedes"
         }
       ],
       limpeza: [

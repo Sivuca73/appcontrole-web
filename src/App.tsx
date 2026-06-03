@@ -276,7 +276,6 @@ export default function App() {
                   <MeetingWeekend 
                     key="weekend-content"
                     fimSemana={selectedWeek?.publicadoFimSemana ? selectedWeek.fimSemana : undefined}
-                    mecanicas={selectedWeek?.publicadoFimSemana ? selectedWeek.mecanicasFimSemana : undefined}
                   />
                 ) : (
                   <MonthlySupportGrid

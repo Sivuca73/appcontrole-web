@@ -67,6 +67,7 @@ export interface DetalheSemanaMecanica {
   audioVideo: string; 
   indicador1: string;
   volante1: string;
+  palco?: string;
 }
 
 export interface DetalheLimpeza {

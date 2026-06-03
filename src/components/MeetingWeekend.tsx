@@ -8,24 +8,21 @@ import {
   User, 
   MapPin, 
   BookOpen, 
-  Music, 
   HelpCircle, 
   FileText,
-  UserCheck,
   Award,
-  Users2
+  Users2,
+  UserCheck
 } from 'lucide-react';
-import { SecaoFimSemana, DesignacoesMecanicas } from '../types';
-import { MechanicalSupportGrid } from './MechanicalSupportGrid';
+import { SecaoFimSemana } from '../types';
 import { motion } from 'motion/react';
 
 interface MeetingWeekendProps {
   key?: string;
   fimSemana?: SecaoFimSemana;
-  mecanicas?: DesignacoesMecanicas;
 }
 
-export function MeetingWeekend({ fimSemana, mecanicas }: MeetingWeekendProps) {
+export function MeetingWeekend({ fimSemana }: MeetingWeekendProps) {
   if (!fimSemana) {
     return (
       <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-gray-100 min-h-[300px] shadow-2xs">
@@ -49,59 +46,17 @@ export function MeetingWeekend({ fimSemana, mecanicas }: MeetingWeekendProps) {
     >
       {/* General header with timings and songs */}
       <div className="bg-slate-55 border border-slate-100 rounded-2xl p-5 bg-linear-to-br from-slate-50 to-white hover:shadow-xs transition duration-300">
-        <h4 className="text-[10px] font-bold text-slate-400 tracking-wider uppercase font-mono mb-4">
+        <h4 className="text-[10px] font-bold text-slate-400 tracking-wider uppercase font-mono mb-3">
           Diretrizes Gerais do Fim de Semana
         </h4>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-slate-100 rounded-lg shrink-0 mt-0.5">
-              <User className="w-4 h-4 text-slate-600" />
-            </div>
-            <div>
-              <span className="block text-xs text-gray-400 font-mono">PRESIDENTE</span>
-              <strong className="text-slate-800 font-semibold">{fimSemana.presidente || "A definir"}</strong>
-            </div>
+        <div className="flex items-start gap-3 text-sm">
+          <div className="p-2 bg-slate-100 rounded-lg shrink-0 mt-0.5">
+            <User className="w-4 h-4 text-slate-600" />
           </div>
-
-          <div className="flex items-start gap-3 hidden">
-            <div className="p-2 bg-indigo-50 rounded-lg shrink-0 mt-0.5 hidden">
-              <Music className="w-4 h-4 text-indigo-600" />
-            </div>
-            <div className="grid grid-cols-3 gap-x-3 hidden">
-              <div>
-                <span className="block text-xs text-gray-400 font-mono">INICIAL</span>
-                <strong className="text-indigo-700 font-semibold">Nº {fimSemana.canticoInicial || "-"}</strong>
-              </div>
-              <div>
-                <span className="block text-xs text-gray-400 font-mono">INTERMED.</span>
-                <strong className="text-indigo-700 font-semibold">Nº {fimSemana.canticoIntermediario || "-"}</strong>
-              </div>
-              <div>
-                <span className="block text-xs text-gray-400 font-mono">FINAL</span>
-                <strong className="text-indigo-700 font-semibold">Nº {fimSemana.canticoFinal || "-"}</strong>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-indigo-50 rounded-lg shrink-0 mt-0.5">
-              <UserCheck className="w-4 h-4 text-indigo-600" />
-            </div>
-            <div className="grid grid-cols-2 gap-x-4">
-              <div>
-                <span className="block text-xs text-gray-400 font-mono font-sans">ORAÇÃO INICIAL</span>
-                <strong className="text-slate-800 font-semibold truncate block max-w-full">
-                  {fimSemana.oracaoInicial || fimSemana.orador || "A definir"}
-                </strong>
-              </div>
-              <div>
-                <span className="block text-xs text-gray-400 font-mono font-sans">ORAÇÃO FINAL</span>
-                <strong className="text-slate-800 font-semibold truncate block max-w-full">
-                  {fimSemana.oracaoFinal || "A definir"}
-                </strong>
-              </div>
-            </div>
+          <div>
+            <span className="block text-xs text-gray-400 font-mono">PRESIDENTE</span>
+            <strong className="text-slate-800 font-semibold text-base">{fimSemana.presidente || "A definir"}</strong>
           </div>
         </div>
       </div>
@@ -220,9 +175,6 @@ export function MeetingWeekend({ fimSemana, mecanicas }: MeetingWeekendProps) {
         </div>
 
       </div>
-
-      {/* Footer Info: Mechanical support designations */}
-      <MechanicalSupportGrid designacoes={mecanicas} />
     </motion.div>
   );
 }
