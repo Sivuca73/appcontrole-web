@@ -16,9 +16,7 @@ import {
   ChevronDown, 
   Layers, 
   Users2, 
-  Info, 
   RefreshCw,
-  Sparkles,
   BookMarked,
   ArrowRight
 } from 'lucide-react';
@@ -233,11 +231,6 @@ export default function App() {
                                 <span className={isCurrentItem ? "font-bold text-gray-900" : "font-semibold"}>
                                   {weekItem.labelSemana}
                                 </span>
-                                {weekItem.temaMensal && (
-                                  <span className="text-[10px] text-gray-400 truncate max-w-[220px]">
-                                    {weekItem.temaMensal}
-                                  </span>
-                                )}
                               </div>
                               <ArrowRight className={`w-3.5 h-3.5 transition opacity-0 group-hover:opacity-100 ${isCurrentItem ? "opacity-100 text-slate-800" : "text-gray-300"}`} />
                             </button>
@@ -250,7 +243,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* PRESENTATION CARD BODY - Proteção injetada aqui */}
+            {/* PRESENTATION CARD BODY */}
             <div className="pt-4" id="view-content-canvas">
               <AnimatePresence mode="wait">
                 {activeTab === 'meioSemana' ? (
@@ -258,6 +251,7 @@ export default function App() {
                     key="midweek-content"
                     meioSemana={selectedWeek?.publicadoMeioSemana ? selectedWeek.meioSemana : undefined}
                     mecanicas={selectedWeek?.publicadoMeioSemana ? selectedWeek.mecanicasMeioSemana : undefined}
+                    isVisitaSuperintendente={selectedWeek?.isVisitaSuperintendente || false}
                   />
                 ) : (
                   <MeetingWeekend 
