@@ -9,22 +9,24 @@ import { initializeApp, getApp, getApps } from 'firebase/app';
 import { getDatabase, ref, get, child, push, set } from 'firebase/database';
 import { SemanaProgramacao } from './types';
 import { DEMO_WEEKS } from './demoData';
+import appletConfig from '../firebase-applet-config.json';
 
-// Fetch credentials from environmental variables (prefixed with VITE_ for client accessibility)
+const projId = appletConfig.projectId || import.meta.env.VITE_FIREBASE_PROJECT_ID;
+
+// Fetch credentials from config file with environment variable fallback
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: appletConfig.apiKey || import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: appletConfig.authDomain || import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: (appletConfig as any).databaseURL || import.meta.env.VITE_FIREBASE_DATABASE_URL || (projId ? `https://${projId}-default-rtdb.firebaseio.com` : ""),
+  projectId: projId,
+  storageBucket: appletConfig.storageBucket || import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: appletConfig.messagingSenderId || import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: appletConfig.appId || import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Check if variables are populated
 const isFirebaseConfigured = !!(
   firebaseConfig.apiKey &&
-  firebaseConfig.databaseURL &&
   firebaseConfig.projectId
 );
 
