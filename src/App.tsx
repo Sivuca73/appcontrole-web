@@ -49,6 +49,7 @@ export default function App() {
   const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [showConfigHint, setShowConfigHint] = useState<boolean>(false);
+  const [showWelcome, setShowWelcome] = useState<boolean>(true);
   
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -107,7 +108,102 @@ export default function App() {
     return `Semana de ${label}`;
   };
 
-  const currentDbStateLabel = isDemoMode ? "Modo Demonstrativo" : "Conectado ao Realtime DB";
+  if (showWelcome) {
+    return (
+      <motion.div 
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.4 }}
+        className="fixed inset-0 bg-gradient-to-b from-[#1C1D21] to-[#0A0B0D] text-white flex flex-col justify-between p-6 z-[999] font-sans overflow-hidden"
+        id="welcome-full-screen-banner"
+      >
+        {/* Decorative Grid backdrop */}
+        <div className="absolute inset-0 bg-[radial-gradient(#1e2025_1px,transparent_1px)] [background-size:16px_16px] opacity-30" />
+        
+        {/* Floating gradient lights */}
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-[#820ad1]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-[#BE9F67]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 max-w-xl mx-auto w-full my-auto flex flex-col items-center text-center space-y-8">
+          
+          {/* Animated Emblem */}
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.15, type: "spring", stiffness: 100 }}
+            className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#820ad1] to-[#51048b] flex items-center justify-center shadow-lg shadow-[#820ad1]/20 border border-white/10"
+          >
+            <BookMarked className="w-8 h-8 text-white animate-pulse" />
+          </motion.div>
+
+          {/* Heading */}
+          <div className="space-y-3">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-xs font-bold tracking-widest text-[#BE9F67] uppercase font-mono block animate-fade-in"
+            >
+              📅 Consultar Reuniões & Designações
+            </motion.span>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white font-display uppercase leading-tight"
+            >
+              BEM-VINDO AO <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a03dfa] to-[#BE9F67]">appControle</span>
+            </motion.h1>
+
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-gray-300 font-light text-sm sm:text-base leading-relaxed max-w-md mx-auto"
+            >
+              Seu painel integrado para visualização e consulta das escalas semanais e designações de reuniões congregacionais.
+            </motion.p>
+          </div>
+
+          {/* Connection Status indicator */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="w-full bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-4.5 text-left text-xs text-gray-400 font-sans space-y-2.5 shadow-xs"
+          >
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
+              <strong className="text-white">Sincronizado com o Firebase Realtime Database</strong>
+            </div>
+            <p className="leading-relaxed text-gray-400">
+              O quadro realiza a consulta automática das escalas do servidor e apresenta as designações atualizadas em tempo real.
+            </p>
+          </motion.div>
+
+          {/* CTA Action Button */}
+          <motion.button
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setShowWelcome(false)}
+            className="w-full max-w-xs py-3.5 px-6 bg-white text-slate-900 hover:bg-gray-100 transition-all font-bold text-sm sm:text-base rounded-2xl flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl cursor-pointer"
+          >
+            Acessar Quadro de Designações
+            <ArrowRight className="w-5 h-5 text-slate-900" />
+          </motion.button>
+        </div>
+
+        {/* Brand signature */}
+        <div className="text-center font-mono opacity-25 text-[10px] uppercase tracking-widest text-gray-500 relative z-10">
+          appControle v1.8 • Realtime Engine
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white text-gray-800 flex flex-col font-sans selection:bg-slate-100 selection:text-slate-900" id="spa-root">
@@ -260,8 +356,6 @@ export default function App() {
                 </AnimatePresence>
               </div>
             </div>
-
-
 
             {/* PRESENTATION CARD BODY */}
             <div className="pt-4" id="view-content-canvas">

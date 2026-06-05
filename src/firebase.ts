@@ -39,41 +39,6 @@ if (isFirebaseConfigured && getApps().length === 0) {
   }
 }
 
-// Como o appVM já está integrado, pegamos a instância ativa do Realtime Database de forma segura
-/**
- * Função que recebe a estrutura exata do AI Studio
- * e lança na árvore JSON do Realtime Database.
- */
-export async function lancarNoQuadroVirtual(dadosEstruturados: any) {
-    try {
-        const db = getFbDatabase();
-        if (!db) {
-            console.warn("[appControle] Realtime Database não configurado/inicializado.");
-            return { cadastrado: false, id: "demo-id-rtdb" };
-        }
-        
-        // 1. Criamos uma referência para o nó onde os quadros ficam salvos
-        const listaQuadrosRef = ref(db, "quadros_virtuais");
-        
-        // 2. Geramos uma nova chave única (equivalente a um novo ID de documento)
-        const novoQuadroRef = push(listaQuadrosRef);
-        
-        // 3. Salvamos a estrutura exata fornecida pela IA nesse novo nó
-        await set(novoQuadroRef, {
-            tituloQuadro: dadosEstruturados.tituloQuadro,
-            colunas: dadosEstruturados.colunas, // Mantém o array/objeto de colunas e cartões
-            origem: "AppVM_AI_Studio",
-            atualizadoEm: new Date().toISOString()
-        });
-        
-        console.log(`[appControle] Dados integrados no Realtime Database! ID: ${novoQuadroRef.key}`);
-        return { cadastrado: true, id: novoQuadroRef.key };
-    } catch (erro) {
-        console.error("[appControle] Erro ao lançar dados no Realtime Database:", erro);
-        throw erro;
-    }
-}
-
 let dbInstance: any = null;
 
 export function getFbDatabase() {
