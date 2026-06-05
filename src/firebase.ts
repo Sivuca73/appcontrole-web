@@ -391,7 +391,11 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
           audioVideo: sw.mecanicasMeioSemana?.midias || "—",
           indicador1: sw.mecanicasMeioSemana?.indicador || "—",
           volante1: sw.mecanicasMeioSemana?.microfonista || "—",
-          palco: sw.mecanicasMeioSemana?.palco || "—"
+          palco: sw.mecanicasMeioSemana?.palco || "—",
+          audioVideoFimSemana: sw.mecanicasFimSemana?.midias || "—",
+          indicadorFimSemana: sw.mecanicasFimSemana?.indicador || "—",
+          volanteFimSemana: sw.mecanicasFimSemana?.microfonista || "—",
+          palcoFimSemana: sw.mecanicasFimSemana?.palco || "—"
         })),
         limpeza: sameMonthWeeks.map((sw: any, idx: number) => ({
           labelSemana: getWeekLabelSimple(sw.originalWeekKey || "w1", sw.originalMonth || "5"),

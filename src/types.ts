@@ -64,10 +64,17 @@ export interface DesignacoesMecanicas {
 
 export interface DetalheSemanaMecanica {
   labelSemana: string;
+  // Meio de Semana (Terça)
   audioVideo: string; 
   indicador1: string;
   volante1: string;
   palco?: string;
+  
+  // Fim de Semana (Sábado)
+  audioVideoFimSemana?: string;
+  indicadorFimSemana?: string;
+  volanteFimSemana?: string;
+  palcoFimSemana?: string;
 }
 
 export interface DetalheLimpeza {

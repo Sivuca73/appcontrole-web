@@ -321,16 +321,16 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
               
               {/* Eliminated description theme below as requested */}
               
-              <div className="border-t border-[#EEBDBD] pt-3 grid grid-cols-2 gap-4 mt-2">
-                <div className="flex items-center justify-between text-xs bg-white/60 p-2 rounded-xl">
-                  <span className="text-[#6d1b19] font-mono text-[9px] tracking-wider uppercase font-semibold">Dirigente</span>
-                  <strong className="text-gray-950 font-bold text-xs truncate max-w-[120px] font-sans">
+              <div className="border-t border-[#EEBDBD] pt-3 flex flex-col gap-2.5 mt-2">
+                <div className="flex items-center justify-between text-xs bg-white/60 p-2.5 rounded-xl">
+                  <span className="text-[#6d1b19] font-mono text-[10px] tracking-wider uppercase font-bold">Dirigente</span>
+                  <strong className="text-gray-950 font-bold text-sm font-sans truncate">
                     {meioSemana.estudoBiblico.dirigente || "A definir"}
                   </strong>
                 </div>
-                <div className="flex items-center justify-between text-xs bg-white/60 p-2 rounded-xl">
-                  <span className="text-[#6d1b19] font-mono text-[9px] tracking-wider uppercase font-semibold">Leitor</span>
-                  <strong className="text-gray-950 font-bold text-xs truncate max-w-[120px] font-sans">
+                <div className="flex items-center justify-between text-xs bg-white/60 p-2.5 rounded-xl">
+                  <span className="text-[#6d1b19] font-mono text-[10px] tracking-wider uppercase font-bold">Leitor</span>
+                  <strong className="text-gray-950 font-bold text-sm font-sans truncate">
                     {meioSemana.estudoBiblico.leitor || "A definir"}
                   </strong>
                 </div>
