@@ -80,6 +80,7 @@ export interface DetalheSemanaMecanica {
 export interface DetalheLimpeza {
   labelSemana: string;
   grupo: string;
+  integrantes?: string[];
 }
 
 export interface SemanaProgramacao {

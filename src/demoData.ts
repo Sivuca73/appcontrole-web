@@ -211,10 +211,26 @@ export const DEMO_WEEKS: SemanaProgramacao[] = [
         }
       ],
       limpeza: [
-        { labelSemana: "01/06 a 07/06", grupo: "Grupo 1 — Salão e Banheiros" },
-        { labelSemana: "08/06 a 14/06", grupo: "Grupo 2 — Palco e Cadeiras" },
-        { labelSemana: "15/06 a 21/06", grupo: "Grupo 3 — Vidros e Quintal" },
-        { labelSemana: "22/06 a 28/06", grupo: "Grupo 4 — Biblioteca e Som" }
+        {
+          labelSemana: "01/06 a 07/06",
+          grupo: "Grupo 1 — Salão e Banheiros",
+          integrantes: ["Mateus Borges", "Felipe Guedes", "Ricardo Lima", "Sandro Azevedo"]
+        },
+        {
+          labelSemana: "08/06 a 14/06",
+          grupo: "Grupo 2 — Palco e Cadeiras",
+          integrantes: ["Daniel Costa", "Gabriel Nunes", "Eduardo Rocha", "Thiago Ramos"]
+        },
+        {
+          labelSemana: "15/06 a 21/06",
+          grupo: "Grupo 3 — Vidros e Quintal",
+          integrantes: ["André Silva", "Diego Sousa", "Jefferson Lima", "Marcelo Santos"]
+        },
+        {
+          labelSemana: "22/06 a 28/06",
+          grupo: "Grupo 4 — Biblioteca e Som",
+          integrantes: ["Maurício Neves", "Renato Cruz", "Lucas Ferreira", "Roberto Alencar"]
+        }
       ]
     }
   },
@@ -332,10 +348,26 @@ export const DEMO_WEEKS: SemanaProgramacao[] = [
         }
       ],
       limpeza: [
-        { labelSemana: "01/06 a 07/06", grupo: "Grupo 1 — Salão e Banheiros" },
-        { labelSemana: "08/06 a 14/06", grupo: "Grupo 2 — Palco e Cadeiras" },
-        { labelSemana: "15/06 a 21/06", grupo: "Grupo 3 — Vidros e Quintal" },
-        { labelSemana: "22/06 a 28/06", grupo: "Grupo 4 — Biblioteca e Som" }
+        {
+          labelSemana: "01/06 a 07/06",
+          grupo: "Grupo 1 — Salão e Banheiros",
+          integrantes: ["Mateus Borges", "Felipe Guedes", "Ricardo Lima", "Sandro Azevedo"]
+        },
+        {
+          labelSemana: "08/06 a 14/06",
+          grupo: "Grupo 2 — Palco e Cadeiras",
+          integrantes: ["Daniel Costa", "Gabriel Nunes", "Eduardo Rocha", "Thiago Ramos"]
+        },
+        {
+          labelSemana: "15/06 a 21/06",
+          grupo: "Grupo 3 — Vidros e Quintal",
+          integrantes: ["André Silva", "Diego Sousa", "Jefferson Lima", "Marcelo Santos"]
+        },
+        {
+          labelSemana: "22/06 a 28/06",
+          grupo: "Grupo 4 — Biblioteca e Som",
+          integrantes: ["Maurício Neves", "Renato Cruz", "Lucas Ferreira", "Roberto Alencar"]
+        }
       ]
     }
   },

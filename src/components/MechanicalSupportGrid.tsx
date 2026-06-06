@@ -181,17 +181,38 @@ export function MonthlySupportGrid({ mecanicaMensal }: MonthlySupportGridProps) 
             <h3 className="text-lg font-bold text-slate-800 tracking-tight font-sans">Limpeza do Salão do Reino</h3>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {mecanicaMensal.limpeza && mecanicaMensal.limpeza.length > 0 ? (
               mecanicaMensal.limpeza.map((item, idx) => (
-                <div key={idx} className="bg-emerald-50/40 border border-emerald-100 rounded-2xl p-4 flex items-center justify-between hover:bg-emerald-50 transition duration-200">
-                  <div className="flex flex-col gap-1 min-w-0">
-                    <span className="text-[10px] font-mono font-bold text-emerald-700/80 uppercase">SEMANA {item.labelSemana}</span>
-                    <strong className="text-slate-900 font-bold text-sm font-sans truncate">{item.grupo || "Grupo a definir"}</strong>
+                <div key={idx} className="bg-emerald-50/20 border border-emerald-100/70 rounded-2xl p-4.5 hover:bg-emerald-50/40 transition duration-200 space-y-3.5 shadow-3xs">
+                  <div className="flex items-center justify-between border-b border-emerald-100/40 pb-2">
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-[10px] font-mono font-bold text-emerald-700/85 uppercase tracking-wide">SEMANA {item.labelSemana}</span>
+                      <strong className="text-slate-900 font-extrabold text-sm font-sans mt-0.5">{item.grupo || "Grupo a definir"}</strong>
+                    </div>
+                    <div className="p-2 bg-emerald-100/30 rounded-xl text-emerald-600 border border-emerald-100/50 shrink-0">
+                      <Trash2 className="w-4 h-4" />
+                    </div>
                   </div>
-                  <div className="p-2 bg-white rounded-xl text-emerald-600 border border-emerald-100 shrink-0">
-                    <Trash2 className="w-4 h-4" />
-                  </div>
+
+                  {/* Integrantes list */}
+                  {item.integrantes && item.integrantes.length > 0 ? (
+                    <div className="space-y-1.5">
+                      <span className="text-[9px] font-mono font-bold text-slate-400 tracking-wider uppercase block">Integrantes Cadastrados</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {item.integrantes.map((member, mIdx) => (
+                          <span key={mIdx} className="inline-flex items-center bg-white border border-emerald-100 text-slate-700 font-sans text-xs px-2.5 py-1 rounded-full shadow-3xs">
+                            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1 px-0 py-0 shrink-0 inline-block align-middle" />
+                            {member}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="pt-0.5">
+                      <span className="text-slate-400 text-xs italic">Nenhum integrante cadastrado para esta equipe.</span>
+                    </div>
+                  )}
                 </div>
               ))
             ) : (

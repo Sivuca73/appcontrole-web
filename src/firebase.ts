@@ -361,6 +361,29 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
                   
                   weeksMap[mappedId].mecanicasMeioSemana = mapMecanicas((weekData as any).reuniao_semana);
                   weeksMap[mappedId].mecanicasFimSemana = mapMecanicas((weekData as any).reuniao_fim_semana);
+
+                  // Extract cleaning crew
+                  let equipeLimpeza = (weekData as any).equipe_limpeza;
+                  if (!equipeLimpeza) {
+                    const limpStr = (weekData as any).reuniao_semana?.limpeza || (weekData as any).reuniao_fim_semana?.limpeza;
+                    if (limpStr) {
+                      const match = limpStr.match(/^([^\(]+)\((.+)\)$/);
+                      if (match) {
+                        const nome = match[1].trim();
+                        const integrantes = match[2].split(',').map((s: string) => s.trim());
+                        equipeLimpeza = { nome, integrantes };
+                      } else {
+                        equipeLimpeza = { nome: limpStr, integrantes: [] };
+                      }
+                    }
+                  }
+                  
+                  if (equipeLimpeza) {
+                    weeksMap[mappedId].equipeLimpeza = {
+                      nome: equipeLimpeza.nome || (equipeLimpeza.numero ? `Equipe ${equipeLimpeza.numero}` : "Equipe de Limpeza"),
+                      integrantes: Array.isArray(equipeLimpeza.integrantes) ? equipeLimpeza.integrantes : []
+                    };
+                  }
                 }
               }
             }
@@ -397,10 +420,14 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
           volanteFimSemana: sw.mecanicasFimSemana?.microfonista || "—",
           palcoFimSemana: sw.mecanicasFimSemana?.palco || "—"
         })),
-        limpeza: sameMonthWeeks.map((sw: any, idx: number) => ({
-          labelSemana: getWeekLabelSimple(sw.originalWeekKey || "w1", sw.originalMonth || "5"),
-          grupo: `Grupo ${idx + 1} — Serviços Gerais`
-        }))
+        limpeza: sameMonthWeeks.map((sw: any, idx: number) => {
+          const eq = sw.equipeLimpeza;
+          return {
+            labelSemana: getWeekLabelSimple(sw.originalWeekKey || "w1", sw.originalMonth || "5"),
+            grupo: eq?.nome || `Equipe ${idx + 1} de Limpeza`,
+            integrantes: eq?.integrantes || []
+          };
+        })
       };
     });
 
