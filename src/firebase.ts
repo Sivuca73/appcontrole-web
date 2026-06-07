@@ -359,13 +359,16 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
                     };
                   }
                   
-                  weeksMap[mappedId].mecanicasMeioSemana = mapMecanicas((weekData as any).reuniao_semana);
-                  weeksMap[mappedId].mecanicasFimSemana = mapMecanicas((weekData as any).reuniao_fim_semana);
+                  const reuniaoSemanaObj = (weekData as any)["reunião_semana"] || (weekData as any).reuniao_semana;
+                  const reuniaoFimSemanaObj = (weekData as any)["reunião_fim_semana"] || (weekData as any).reuniao_fim_semana;
+
+                  weeksMap[mappedId].mecanicasMeioSemana = mapMecanicas(reuniaoSemanaObj);
+                  weeksMap[mappedId].mecanicasFimSemana = mapMecanicas(reuniaoFimSemanaObj);
 
                   // Extract cleaning crew
-                  let equipeLimpeza = (weekData as any).equipe_limpeza;
+                  let equipeLimpeza = (weekData as any)["equipe_limpeza"] || (weekData as any).equipe_limpeza || (weekData as any)["equipeLimpeza"];
                   if (!equipeLimpeza) {
-                    const limpStr = (weekData as any).reuniao_semana?.limpeza || (weekData as any).reuniao_fim_semana?.limpeza;
+                    const limpStr = (reuniaoSemanaObj as any)?.limpeza || (reuniaoFimSemanaObj as any)?.limpeza;
                     if (limpStr) {
                       const match = limpStr.match(/^([^\(]+)\((.+)\)$/);
                       if (match) {
@@ -380,7 +383,7 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
                   
                   if (equipeLimpeza) {
                     weeksMap[mappedId].equipeLimpeza = {
-                      nome: equipeLimpeza.nome || (equipeLimpeza.numero ? `Equipe ${equipeLimpeza.numero}` : "Equipe de Limpeza"),
+                      nome: equipeLimpeza.nome || equipeLimpeza.grupo || (equipeLimpeza.numero ? `Equipe ${equipeLimpeza.numero}` : "Equipe de Limpeza"),
                       integrantes: Array.isArray(equipeLimpeza.integrantes) ? equipeLimpeza.integrantes : []
                     };
                   }

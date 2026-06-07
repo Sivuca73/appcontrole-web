@@ -71,11 +71,11 @@ function getMidweekIcon(partTitle: string, sectionType: 'tesouros' | 'faca-seu-m
 export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
   if (!meioSemana) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-gray-100 min-h-[300px] shadow-2xs">
-        <Calendar className="w-12 h-12 text-[#34727D]/40 mb-4 animate-pulse" />
-        <h3 className="text-base font-bold text-gray-700 font-sans">Meio de Semana</h3>
-        <p className="text-[#34727D] font-medium max-w-sm mt-2 text-sm font-sans bg-[#E4F2F4]/60 px-4 py-2.5 rounded-xl border border-[#CDE5E9]">
-          Programação ainda não publicada para este dia.
+      <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-[#E2E8F0] min-h-[300px] shadow-xs">
+        <Calendar className="w-12 h-12 text-[#1A365D]/20 mb-4 animate-pulse" />
+        <h3 className="text-base font-bold text-[#1A365D] font-sans">Meio de Semana</h3>
+        <p className="text-[#1A365D] font-medium max-w-sm mt-2 text-xs font-sans bg-[#1A365D]/5 px-4 py-2.5 rounded-xl border border-[#1A365D]/10">
+          Programação ainda não publicada para esta semana.
         </p>
       </div>
     );
@@ -322,15 +322,15 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
               {/* Eliminated description theme below as requested */}
               
               <div className="border-t border-[#EEBDBD] pt-3 flex flex-col gap-2.5 mt-2">
-                <div className="flex items-center justify-between text-xs bg-white/60 p-2.5 rounded-xl">
-                  <span className="text-[#6d1b19] font-mono text-[10px] tracking-wider uppercase font-bold">Dirigente</span>
-                  <strong className="text-gray-950 font-bold text-sm font-sans truncate">
+                <div className="flex flex-col items-start gap-0.5 bg-white/60 p-2.5 rounded-xl w-full">
+                  <span className="text-[#6d1b19] font-mono text-[9px] tracking-wider uppercase font-bold">Dirigente</span>
+                  <strong className="text-[#2D3748] font-bold text-sm font-sans w-full truncate">
                     {meioSemana.estudoBiblico.dirigente || "A definir"}
                   </strong>
                 </div>
-                <div className="flex items-center justify-between text-xs bg-white/60 p-2.5 rounded-xl">
-                  <span className="text-[#6d1b19] font-mono text-[10px] tracking-wider uppercase font-bold">Leitor</span>
-                  <strong className="text-gray-950 font-bold text-sm font-sans truncate">
+                <div className="flex flex-col items-start gap-0.5 bg-white/60 p-2.5 rounded-xl w-full">
+                  <span className="text-[#6d1b19] font-mono text-[9px] tracking-wider uppercase font-bold">Leitor</span>
+                  <strong className="text-[#2D3748] font-bold text-sm font-sans w-full truncate">
                     {meioSemana.estudoBiblico.leitor || "A definir"}
                   </strong>
                 </div>
