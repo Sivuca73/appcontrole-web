@@ -7,12 +7,15 @@
   --font-display: "Space Grotesk", sans-serif;
 }
 
-body {
-  background-color: #F7F9FC;
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #1A365D; /* Default to match dark theme welcome screen */
   font-family: var(--font-sans);
   color: #2D3748;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
 }
 
 /* Custom subtle scrollbar */

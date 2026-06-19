@@ -97,7 +97,7 @@ export function MeetingWeekend({ fimSemana }: MeetingWeekendProps) {
                 <span className="block text-[9px] font-mono text-gray-400 uppercase tracking-widest mb-1">CONGREGAÇÃO</span>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                  <span className="text-xs font-semibold text-slate-700 truncate">{fimSemana.congregaçãoOrador || "Congregação Local"}</span>
+                  <span className="text-xs font-semibold text-slate-700 truncate">{fimSemana.congregaçãoOrador || "Congregação Reduto"}</span>
                 </div>
               </div>
             </div>

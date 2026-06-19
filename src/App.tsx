@@ -12,6 +12,7 @@ import { SemanaProgramacao } from './types';
 import { MeetingMidweek } from './components/MeetingMidweek';
 import { MeetingWeekend } from './components/MeetingWeekend';
 import { MonthlySupportGrid } from './components/MechanicalSupportGrid';
+import { FieldReportsModule } from './components/FieldReportsModule';
 import { 
   CalendarDays, 
   ChevronDown, 
@@ -22,7 +23,8 @@ import {
   Sparkles,
   BookMarked,
   ArrowRight,
-  Monitor
+  Monitor,
+  FileText
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
@@ -44,7 +46,7 @@ function getMondayOfCurrentWeek(): string {
 export default function App() {
   const [weeks, setWeeks] = useState<SemanaProgramacao[]>([]);
   const [selectedWeek, setSelectedWeek] = useState<SemanaProgramacao | null>(null);
-  const [activeTab, setActiveTab] = useState<'meioSemana' | 'fimSemana' | 'mecanica'>('meioSemana');
+  const [activeTab, setActiveTab] = useState<'meioSemana' | 'fimSemana' | 'mecanica' | 'relatorio'>('meioSemana');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -52,6 +54,17 @@ export default function App() {
   const [showWelcome, setShowWelcome] = useState<boolean>(true);
   
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Dynamically change background color of body and html based on showWelcome status to prevent white bars at the top/bottom (safe area / bounce)
+  useEffect(() => {
+    if (showWelcome) {
+      document.body.style.backgroundColor = '#1A365D';
+      document.documentElement.style.backgroundColor = '#1A365D';
+    } else {
+      document.body.style.backgroundColor = '#F7F9FC';
+      document.documentElement.style.backgroundColor = '#F7F9FC';
+    }
+  }, [showWelcome]);
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -144,7 +157,7 @@ export default function App() {
               transition={{ delay: 0.3 }}
               className="text-xs font-bold tracking-widest text-[#BE9F67] uppercase font-mono block"
             >
-              📅 Programação Congregacional
+              📅 Programação Congregacional de Reduto
             </motion.span>
             
             <motion.h1 
@@ -154,6 +167,9 @@ export default function App() {
               className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white font-display leading-tight"
             >
               BEM-VINDO À <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#4A90E2] to-[#BE9F67]">Agenda Teocrática</span>
+              <span className="block text-xl sm:text-2xl text-[#BE9F67] font-semibold mt-2 tracking-wide font-sans normal-case">
+                da Congregação Reduto
+              </span>
             </motion.h1>
 
             <motion.p 
@@ -162,7 +178,7 @@ export default function App() {
               transition={{ delay: 0.6 }}
               className="text-slate-200 font-light text-sm sm:text-base leading-relaxed max-w-md mx-auto"
             >
-              Consulte facilmente as designações e programações congregacionais atualizadas.
+              Consulte facilmente as designações e programações da Congregação Reduto atualizadas.
             </motion.p>
           </div>
 
@@ -199,7 +215,7 @@ export default function App() {
 
         {/* Brand signature */}
         <div className="text-center font-mono opacity-40 text-[9px] uppercase tracking-widest text-[#BE9F67] relative z-10">
-          Agenda Teocrática • Quadro Virtual de Reuniões
+          Agenda Teocrática • Congregação Reduto
         </div>
       </motion.div>
     );
@@ -220,7 +236,7 @@ export default function App() {
                 Quadro de Designações
               </span>
               <strong className="text-sm font-bold text-[#1A365D] font-sans tracking-tight">
-                Agenda Teocrática
+                Agenda Teocrática — Reduto
               </strong>
             </div>
           </div>
@@ -275,86 +291,88 @@ export default function App() {
         ) : (
           <>
             {/* HERO BLOCK: WEEK TITLE & WEEK DROP-DOWN SELECTOR */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 border-b border-[#E2E8F0] pb-6" id="hero-block">
-              <div className="space-y-1.5 flex-1">
-                <span className="text-[10px] sm:text-xs font-semibold text-[#BE9F67] tracking-widest uppercase font-mono flex items-center gap-1.5">
-                  <CalendarDays className="w-3.5 h-3.5 text-[#BE9F67]" />
-                  Programação Congregacional
-                </span>
-                
-                {/* Dynamically configured format title */}
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1A365D] font-display" id="selected-week-title">
-                  {selectedWeek ? formatWeekLabelLong(selectedWeek.labelSemana) : "Semana de Consulta"}
-                </h1>
-              </div>
+            {activeTab !== 'relatorio' && (
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 border-b border-[#E2E8F0] pb-6" id="hero-block">
+                <div className="space-y-1.5 flex-1">
+                  <span className="text-[10px] sm:text-xs font-semibold text-[#BE9F67] tracking-widest uppercase font-mono flex items-center gap-1.5">
+                    <CalendarDays className="w-3.5 h-3.5 text-[#BE9F67]" />
+                    Programação Congregacional • Reduto
+                  </span>
+                  
+                  {/* Dynamically configured format title */}
+                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1A365D] font-display" id="selected-week-title">
+                    {selectedWeek ? formatWeekLabelLong(selectedWeek.labelSemana) : "Semana de Consulta"}
+                  </h1>
+                </div>
 
-              {/* Discreet Week Dropdown Selector */}
-              <div ref={dropdownRef} className="relative shrink-0" id="seletor-semana-dropdown-root">
-                <button
-                  id="dropdown-toggle-btn"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center justify-between gap-3 px-4.5 py-3 border border-[#E2E8F0] rounded-2xl bg-white hover:bg-slate-50 hover:border-[#BE9F67]/30 transition shadow-2xs font-sans text-xs font-bold text-[#1A365D] min-w-[210px] cursor-pointer"
-                >
-                  <span className="truncate">Alternar Semana</span>
-                  <ChevronDown className={`w-4 h-4 text-[#718096] transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
-                </button>
+                {/* Discreet Week Dropdown Selector */}
+                <div ref={dropdownRef} className="relative shrink-0" id="seletor-semana-dropdown-root">
+                  <button
+                    id="dropdown-toggle-btn"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="flex items-center justify-between gap-3 px-4.5 py-3 border border-[#E2E8F0] rounded-2xl bg-white hover:bg-slate-50 hover:border-[#BE9F67]/30 transition shadow-2xs font-sans text-xs font-bold text-[#1A365D] min-w-[210px] cursor-pointer"
+                  >
+                    <span className="truncate">Alternar Semana</span>
+                    <ChevronDown className={`w-4 h-4 text-[#718096] transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
+                  </button>
 
-                <AnimatePresence>
-                  {isDropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                      transition={{ duration: 0.18, ease: "easeOut" }}
-                      className="absolute right-0 mt-2 w-72 bg-white border border-[#E2E8F0] rounded-2xl shadow-xl overflow-hidden z-40 py-1.5"
-                      id="dropdown-menu-list"
-                    >
-                      <div className="px-3 pb-1.5 mb-1.5 border-b border-[#E2E8F0]">
-                        <span className="text-[9px] font-bold text-gray-400 tracking-wider uppercase font-mono block">
-                          Selecione o Período
-                        </span>
-                      </div>
-                      
-                      <div className="max-h-64 overflow-y-auto space-y-0.5">
-                        {weeks.map((weekItem) => {
-                          const isCurrentItem = selectedWeek?.id === weekItem.id;
-                          return (
-                            <button
-                              key={weekItem.id}
-                              id={`week-option-${weekItem.id}`}
-                              onClick={() => {
-                                setSelectedWeek(weekItem);
-                                setIsDropdownOpen(false);
-                              }}
-                              className={`w-full text-left px-4 py-2.5 text-xs font-semibold flex items-center justify-between transition-colors ${
-                                isCurrentItem 
-                                  ? "bg-[#1A365D]/5 text-[#1A365D] border-l-4 border-[#1A365D]" 
-                                  : "text-[#718096] hover:bg-slate-50 hover:text-[#1A365D]"
-                              }`}
-                            >
-                              <div className="flex flex-col min-w-0">
-                                <span className={isCurrentItem ? "font-bold text-[#1A365D]" : "font-semibold"}>
-                                  {weekItem.labelSemana}
-                                </span>
-                                {weekItem.temaMensal && (
-                                  <span className="text-[10px] text-gray-400 truncate max-w-[220px]">
-                                    {weekItem.temaMensal}
+                  <AnimatePresence>
+                    {isDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                        transition={{ duration: 0.18, ease: "easeOut" }}
+                        className="absolute right-0 mt-2 w-72 bg-white border border-[#E2E8F0] rounded-2xl shadow-xl overflow-hidden z-40 py-1.5"
+                        id="dropdown-menu-list"
+                      >
+                        <div className="px-3 pb-1.5 mb-1.5 border-b border-[#E2E8F0]">
+                          <span className="text-[9px] font-bold text-gray-400 tracking-wider uppercase font-mono block">
+                            Selecione o Período
+                          </span>
+                        </div>
+                        
+                        <div className="max-h-64 overflow-y-auto space-y-0.5">
+                          {weeks.map((weekItem) => {
+                            const isCurrentItem = selectedWeek?.id === weekItem.id;
+                            return (
+                              <button
+                                key={weekItem.id}
+                                id={`week-option-${weekItem.id}`}
+                                onClick={() => {
+                                  setSelectedWeek(weekItem);
+                                  setIsDropdownOpen(false);
+                                }}
+                                className={`w-full text-left px-4 py-2.5 text-xs font-semibold flex items-center justify-between transition-colors ${
+                                  isCurrentItem 
+                                    ? "bg-[#1A365D]/5 text-[#1A365D] border-l-4 border-[#1A365D]" 
+                                    : "text-[#718096] hover:bg-slate-50 hover:text-[#1A365D]"
+                                }`}
+                              >
+                                <div className="flex flex-col min-w-0">
+                                  <span className={isCurrentItem ? "font-bold text-[#1A365D]" : "font-semibold"}>
+                                    {weekItem.labelSemana}
                                   </span>
-                                )}
-                              </div>
-                              <ArrowRight className={`w-3.5 h-3.5 transition opacity-0 group-hover:opacity-100 ${isCurrentItem ? "opacity-100 text-[#1A365D]" : "text-gray-300"}`} />
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                                  {weekItem.temaMensal && (
+                                    <span className="text-[10px] text-gray-400 truncate max-w-[220px]">
+                                      {weekItem.temaMensal}
+                                    </span>
+                                  )}
+                                </div>
+                                <ArrowRight className={`w-3.5 h-3.5 transition opacity-0 group-hover:opacity-100 ${isCurrentItem ? "opacity-100 text-[#1A365D]" : "text-gray-300"}`} />
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* PRESENTATION HIGHLIGHT CARD (CARTÃO DESTAQUE) */}
-            {selectedWeek && (
+            {activeTab !== 'relatorio' && selectedWeek && (
               <div 
                 className="bg-white border border-[#E2E8F0] rounded-2xl p-5 shadow-xs hover:shadow-sm transition-all duration-300 relative overflow-hidden" 
                 id="highlight-info-card"
@@ -408,10 +426,14 @@ export default function App() {
                     key="weekend-content"
                     fimSemana={selectedWeek?.publicadoFimSemana ? selectedWeek.fimSemana : undefined}
                   />
-                ) : (
+                ) : activeTab === 'mecanica' ? (
                   <MonthlySupportGrid
                     key="mecanica-content"
                     mecanicaMensal={selectedWeek?.mecanicaMensal}
+                  />
+                ) : (
+                  <FieldReportsModule 
+                    key="relatorio-content"
                   />
                 )}
               </AnimatePresence>
@@ -425,17 +447,17 @@ export default function App() {
       <footer className="border-t border-[#E2E8F0] text-[#718096] pt-8 pb-32 text-xs font-sans mt-auto bg-white/50" id="spa-footer">
         <div className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-center sm:text-left leading-normal font-medium">
-            Programação Congregacional Local.
-            <span className="block text-[10px] text-[#718096]/75 mt-0.5">Todos os direitos reservados à Congregação Local.</span>
+            Programação Congregacional de Reduto.
+            <span className="block text-[10px] text-[#718096]/75 mt-0.5">Todos os direitos reservados à Congregação Reduto.</span>
           </p>
           <span className="px-3 py-1 bg-[#F7F9FC] border border-[#E2E8F0] rounded-lg text-[10px] font-mono hover:bg-[#E2E8F0]/30 transition-colors">
-            Agenda Teocrática Virtuais 2026
+            Agenda Teocrática — Reduto 2026
           </span>
         </div>
       </footer>
 
       {/* Translucent Floating Bottom Menu Bar with labels below the icons */}
-      <div className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md border border-[#E2E8F0] rounded-full py-2 px-3.5 z-50 flex justify-center shadow-lg hover:shadow-xl transition-all duration-300 w-[360px] max-w-[95vw]" id="bottom-navigation-bar">
+      <div className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md border border-[#E2E8F0] rounded-full py-2 px-3.5 z-50 flex justify-center shadow-lg hover:shadow-xl transition-all duration-300 w-[440px] max-w-[95vw]" id="bottom-navigation-bar">
         <div className="w-full flex justify-between items-center gap-1.5">
           <button
             id="menu-btn-meio-semana"
@@ -483,6 +505,22 @@ export default function App() {
           >
             <Monitor className={`w-4.5 h-4.5 mb-0.5 transition-transform ${activeTab === 'mecanica' ? 'text-[#4A90E2]' : ''}`} />
             <span className="text-[10px] font-sans font-semibold tracking-tight">Apoio</span>
+          </button>
+
+          <button
+            id="menu-btn-relatorio"
+            onClick={() => {
+              setActiveTab('relatorio');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className={`flex-1 flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-300 cursor-pointer ${
+              activeTab === 'relatorio'
+                ? "bg-[#1A365D]/5 text-[#1A365D] font-bold scale-[1.01]"
+                : "text-[#718096] hover:text-[#2D3748] hover:bg-slate-50/50"
+            }`}
+          >
+            <FileText className={`w-4.5 h-4.5 mb-0.5 transition-transform ${activeTab === 'relatorio' ? 'text-[#BE9F67]' : ''}`} />
+            <span className="text-[10px] font-sans font-semibold tracking-tight">Relatório</span>
           </button>
         </div>
       </div>
