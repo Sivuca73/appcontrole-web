@@ -6,14 +6,14 @@
     <title>appControle - Agenda Teocrática</title>
     
     <!-- PWA Settings -->
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#1A365D" />
     
     <!-- iOS support -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="appControle" />
-    <link rel="apple-touch-icon" href="/icon-512.jpg" />
+    <link rel="apple-touch-icon" href="icon-512.png" />
   </head>
   <body>
     <div id="root"></div>
@@ -21,7 +21,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
+          navigator.serviceWorker.register('sw.js')
             .then(reg => console.log('Service Worker registrado com sucesso:', reg))
             .catch(err => console.error('Erro ao registrar o Service Worker:', err));
         });
