@@ -1,7 +1,7 @@
 {
   "id": "app.controle.agenda.teocratica",
-  "name": "appControle - Agenda Teocrática",
-  "short_name": "appControle",
+  "name": "Agenda - Agenda Teocrática",
+  "short_name": "Agenda",
   "description": "Quadro virtual de designações, programação semanal e relatórios de campo da Congregação Reduto.",
   "start_url": "index.html",
   "scope": "./",
