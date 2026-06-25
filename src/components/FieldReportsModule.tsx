@@ -855,9 +855,18 @@ export function FieldReportsModule() {
 
                   {/* DIRECTORY LISTING MAP */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
-                    {publishers
-                      .filter(pub => pub.nome.toLowerCase().includes(publisherSearch.toLowerCase()))
-                      .map((pub) => (
+                    {publishers.length === 0 ? (
+                      <div className="col-span-1 md:col-span-2 flex flex-col items-center justify-center p-8 bg-white border border-[#E2E8F0] rounded-2xl text-center shadow-3xs" id="publishers-empty-state-card">
+                        <Users2 className="w-12 h-12 text-[#1A365D]/20 mb-3" />
+                        <h4 className="text-sm font-bold text-[#1A365D] font-sans">Nenhum Publicador Cadastrado</h4>
+                        <p className="text-xs text-slate-500 mt-1 max-w-sm">
+                          Cadastre os membros da congregação clicando no botão <strong>"Novo Publicador"</strong> acima para poder gerenciar as designações de relatórios.
+                        </p>
+                      </div>
+                    ) : (
+                      publishers
+                        .filter(pub => pub.nome.toLowerCase().includes(publisherSearch.toLowerCase()))
+                        .map((pub) => (
                         <div 
                           key={pub.id} 
                           className={`bg-white border rounded-2xl p-5 space-y-4 hover:shadow-2xs transition duration-300 relative overflow-hidden ${
@@ -949,7 +958,7 @@ export function FieldReportsModule() {
                             </button>
                           </div>
                         </div>
-                      ))}
+                      )))}
                   </div>
 
                   {/* MODAL: ADD / EDIT PUBLISHER (Módulo 2) */}
@@ -1275,6 +1284,22 @@ export function FieldReportsModule() {
 
               </div>
 
+            </div>
+          ) : publishers.length === 0 ? (
+            /* PUBLISHER VIEW: WARNING WHEN NO PUBLISHERS */
+            <div className="max-w-md mx-auto py-8 text-center space-y-6" id="publisher-empty-warning">
+              <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center border border-amber-200 text-amber-600 mx-auto shadow-3xs">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-bold text-lg text-[#1A365D] tracking-tight font-sans">Sem Publicadores Cadastrados</h3>
+                <p className="text-xs text-slate-500 leading-normal max-w-sm mx-auto">
+                  Não há publicadores cadastrados no banco de dados Firebase para a congregação Reduto.
+                </p>
+                <p className="text-xs text-slate-500 leading-normal max-w-sm mx-auto">
+                  O secretário precisa acessar a <strong>Área do Secretário</strong> (no botão acima) e cadastrar os publicadores para que eles possam enviar seus relatórios.
+                </p>
+              </div>
             </div>
           ) : (
             

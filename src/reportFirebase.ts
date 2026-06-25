@@ -29,40 +29,6 @@ export interface FieldReport {
   dataEnvio: number;   // timestamp
 }
 
-// Default initial publishers to seed if the database is empty, using names from congregations
-const DEMO_PUBLISHERS: Publisher[] = [
-  {
-    id: "pub_1",
-    nome: "Carlos Albuquerque",
-    sexo: "masculino",
-    tipo: "pioneiro_regular",
-    telefone: "(81) 98888-7711",
-    email: "carlos.albuquerque@reduto.org",
-    codigo: "123456",
-    ativo: true
-  },
-  {
-    id: "pub_2",
-    nome: "Antônio Silva",
-    sexo: "masculino",
-    tipo: "publicador",
-    telefone: "(81) 99111-2233",
-    email: "antonio.silva@reduto.org",
-    codigo: "654321",
-    ativo: true
-  },
-  {
-    id: "pub_3",
-    nome: "Larissa Silva",
-    sexo: "feminino",
-    tipo: "pioneiro_auxiliar",
-    telefone: "(81) 99777-6655",
-    email: "larissa.silva@reduto.org",
-    codigo: "111222",
-    ativo: true
-  }
-];
-
 // Helper to check if localStorage is available
 const isLocalStorageAvailable = () => {
   try {
@@ -72,11 +38,11 @@ const isLocalStorageAvailable = () => {
   }
 };
 
-// Initialize localStorage with mockup publishers if needed
+// Initialize localStorage with empty array if needed
 const initLocalData = () => {
   if (!isLocalStorageAvailable()) return;
   if (!localStorage.getItem('reduto_publishers')) {
-    localStorage.setItem('reduto_publishers', JSON.stringify(DEMO_PUBLISHERS));
+    localStorage.setItem('reduto_publishers', JSON.stringify([]));
   }
   if (!localStorage.getItem('reduto_reports')) {
     localStorage.setItem('reduto_reports', JSON.stringify([]));
@@ -92,13 +58,12 @@ export async function getPublishersFromDB(): Promise<Publisher[]> {
   const db = getFbDatabase();
 
   if (!db) {
-    // Demo Fallback
-    console.log("[FieldReports] Firebase not configured or in demo mode. Loading from localStorage.");
+    console.log("[FieldReports] Firebase not configured. Loading from localStorage.");
     if (isLocalStorageAvailable()) {
       const local = localStorage.getItem('reduto_publishers');
-      return local ? JSON.parse(local) : DEMO_PUBLISHERS;
+      return local ? JSON.parse(local) : [];
     }
-    return DEMO_PUBLISHERS;
+    return [];
   }
 
   try {
@@ -116,30 +81,16 @@ export async function getPublishersFromDB(): Promise<Publisher[]> {
       });
       return list;
     } else {
-      // Seed initial publishers in Realtime Database so the secretary doesn't start from an empty database!
-      console.log("[FieldReports] No publishers found in Realtime Database. Seeding default publishers.");
-      const updates: Record<string, any> = {};
-      DEMO_PUBLISHERS.forEach((pub) => {
-        updates[`publicadores/${pub.id}`] = {
-          nome: pub.nome,
-          sexo: pub.sexo,
-          tipo: pub.tipo,
-          telefone: pub.telefone || "",
-          email: pub.email || "",
-          codigo: pub.codigo,
-          ativo: pub.ativo
-        };
-      });
-      await update(ref(db), updates);
-      return DEMO_PUBLISHERS;
+      console.log("[FieldReports] No publishers found in Realtime Database.");
+      return [];
     }
   } catch (err) {
     console.error("Error fetching publishers from Realtime DB:", err);
     if (isLocalStorageAvailable()) {
       const local = localStorage.getItem('reduto_publishers');
-      return local ? JSON.parse(local) : DEMO_PUBLISHERS;
+      return local ? JSON.parse(local) : [];
     }
-    return DEMO_PUBLISHERS;
+    return [];
   }
 }
 
@@ -153,7 +104,7 @@ export async function savePublisherToDB(pub: Partial<Publisher> & { id: string }
     // Local Fallback
     if (isLocalStorageAvailable()) {
       const local = localStorage.getItem('reduto_publishers');
-      let list: Publisher[] = local ? JSON.parse(local) : [...DEMO_PUBLISHERS];
+      let list: Publisher[] = local ? JSON.parse(local) : [];
       const index = list.findIndex(p => p.id === pub.id);
       if (index !== -1) {
         list[index] = { ...list[index], ...pub } as Publisher;
@@ -175,7 +126,7 @@ export async function savePublisherToDB(pub: Partial<Publisher> & { id: string }
     // Local Fallback
     if (isLocalStorageAvailable()) {
       const local = localStorage.getItem('reduto_publishers');
-      let list: Publisher[] = local ? JSON.parse(local) : [...DEMO_PUBLISHERS];
+      let list: Publisher[] = local ? JSON.parse(local) : [];
       const index = list.findIndex(p => p.id === pub.id);
       if (index !== -1) {
         list[index] = { ...list[index], ...pub } as Publisher;

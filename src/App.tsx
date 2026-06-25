@@ -48,7 +48,6 @@ export default function App() {
   const [selectedWeek, setSelectedWeek] = useState<SemanaProgramacao | null>(null);
   const [activeTab, setActiveTab] = useState<'meioSemana' | 'fimSemana' | 'mecanica' | 'relatorio'>('meioSemana');
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [showConfigHint, setShowConfigHint] = useState<boolean>(false);
   const [showWelcome, setShowWelcome] = useState<boolean>(true);
@@ -80,9 +79,8 @@ export default function App() {
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const { weeks: loadedWeeks, isDemo } = await fetchSchedulesFromDB();
+      const { weeks: loadedWeeks } = await fetchSchedulesFromDB();
       setWeeks(loadedWeeks);
-      setIsDemoMode(isDemo);
       
       if (loadedWeeks.length > 0) {
         // "Inteligência de Exibição Atual" - search for current week based on 2026-06-01

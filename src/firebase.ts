@@ -8,7 +8,6 @@
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import { getDatabase, ref, get, child, push, set } from 'firebase/database';
 import { SemanaProgramacao } from './types';
-import { DEMO_WEEKS } from './demoData';
 import appletConfig from '../firebase-applet-config.json';
 
 const projId = appletConfig.projectId || import.meta.env.VITE_FIREBASE_PROJECT_ID;
