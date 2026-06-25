@@ -75,7 +75,7 @@ export function MeetingMidweek({ meioSemana, mecanicas }: MeetingMidweekProps) {
         <Calendar className="w-12 h-12 text-[#1A365D]/20 mb-4 animate-pulse" />
         <h3 className="text-base font-bold text-[#1A365D] font-sans">Meio de Semana</h3>
         <p className="text-[#1A365D] font-medium max-w-sm mt-2 text-xs font-sans bg-[#1A365D]/5 px-4 py-2.5 rounded-xl border border-[#1A365D]/10">
-          Programação ainda não publicada para esta semana.
+          Não há programações de Meio de Semana cadastradas ou disponíveis no banco de dados Firebase para o período selecionado.
         </p>
       </div>
     );

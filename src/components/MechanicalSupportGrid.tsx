@@ -75,7 +75,7 @@ export function MonthlySupportGrid({ mecanicaMensal }: MonthlySupportGridProps) 
         <Monitor className="w-12 h-12 text-[#1A365D]/20 mb-4" />
         <h3 className="text-base font-bold text-[#1A365D] font-sans">Apoio Técnico & Quadro Mecânico</h3>
         <p className="text-[#1A365D] font-semibold max-w-sm mt-3 text-xs font-sans bg-[#1A365D]/5 px-4 py-2.5 rounded-xl border border-[#1A365D]/10">
-          Escala mensal de apoio técnico e limpeza não publicada para este período.
+          Não há escalas de apoio técnico ou quadro mecânico disponíveis no banco de dados Firebase para este período.
         </p>
       </div>
     );

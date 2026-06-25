@@ -9,7 +9,7 @@ async function startServer() {
   // 1. SERVIR ARQUIVOS ESTÁTICOS CORRETAMENTE (primeiro)
   // Certificando que a pasta "public" seja servida primeiro, permitindo acesso direto a /manifest.json e ícones.
   // Usamos index: false para evitar servir o index.html bruto em vez de passar para o Vite/SPA compilado.
-  app.use(express.static("public"));
+  app.use(express.static(path.join(process.cwd(), "public"), { index: false }));
 
   // 2. ROTAS DE API (se existirem) - segundo
   app.get("/api/health", (req, res) => {

@@ -301,7 +301,7 @@ export default function App() {
                   
                   {/* Dynamically configured format title */}
                   <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1A365D] font-display" id="selected-week-title">
-                    {selectedWeek ? formatWeekLabelLong(selectedWeek.labelSemana) : "Semana de Consulta"}
+                    {selectedWeek ? formatWeekLabelLong(selectedWeek.labelSemana) : "Nenhuma semana disponível"}
                   </h1>
                 </div>
 
@@ -309,10 +309,15 @@ export default function App() {
                 <div ref={dropdownRef} className="relative shrink-0" id="seletor-semana-dropdown-root">
                   <button
                     id="dropdown-toggle-btn"
+                    disabled={weeks.length === 0}
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center justify-between gap-3 px-4.5 py-3 border border-[#E2E8F0] rounded-2xl bg-white hover:bg-slate-50 hover:border-[#BE9F67]/30 transition shadow-2xs font-sans text-xs font-bold text-[#1A365D] min-w-[210px] cursor-pointer"
+                    className={`flex items-center justify-between gap-3 px-4.5 py-3 border border-[#E2E8F0] rounded-2xl bg-white transition shadow-2xs font-sans text-xs font-bold text-[#1A365D] min-w-[210px] ${
+                      weeks.length === 0 
+                        ? "opacity-50 cursor-not-allowed" 
+                        : "hover:bg-slate-50 hover:border-[#BE9F67]/30 cursor-pointer"
+                    }`}
                   >
-                    <span className="truncate">Alternar Semana</span>
+                    <span className="truncate">{weeks.length === 0 ? "Sem semanas disponíveis" : "Alternar Semana"}</span>
                     <ChevronDown className={`w-4 h-4 text-[#718096] transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
                   </button>
 

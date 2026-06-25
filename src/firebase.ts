@@ -69,8 +69,8 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
   const db = getFbDatabase();
   
   if (!db) {
-    console.log("Firebase not configured. Returning local demo schedules.");
-    return { weeks: DEMO_WEEKS, isDemo: true };
+    console.log("Firebase not configured. Returning empty schedules list.");
+    return { weeks: [], isDemo: false };
   }
   
   try {
@@ -94,8 +94,8 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
       Object.keys(valMecanica).length === 0;
       
     if (databaseIsEmpty) {
-      console.log("No data found in Firebase under new trunks. Falling back to local DEMO_WEEKS.");
-      return { weeks: DEMO_WEEKS, isDemo: true };
+      console.log("No data found in Firebase under new trunks. Returning empty schedules list.");
+      return { weeks: [], isDemo: false };
     }
     
     const weeksMap: Record<string, any> = {};
@@ -439,10 +439,10 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
       return { weeks: weeksList, isDemo: false };
     }
     
-    console.log("Database fetch retrieved empty weeks list. Fallback to DEMO_WEEKS.");
-    return { weeks: DEMO_WEEKS, isDemo: true };
+    console.log("Database fetch retrieved empty weeks list. Returning empty list.");
+    return { weeks: [], isDemo: false };
   } catch (error) {
     console.error("Error fetching and/or fusing from Realtime Database:", error);
-    return { weeks: DEMO_WEEKS, isDemo: true };
+    return { weeks: [], isDemo: false };
   }
 }
