@@ -58,8 +58,14 @@ export function FieldReportsModule() {
   // Sub-tabs for Secretary Mode
   const [secActiveTab, setSecActiveTab] = useState<'received' | 'publishers'>('received');
 
+  // Helper to get current month string dynamically (e.g., "2026-06")
+  const currentMonthStr = React.useMemo(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  }, []);
+
   // Input states for Publisher Report Form
-  const [selectedMonth, setSelectedMonth] = useState<string>('2026-06'); // Current local time is June 2026
+  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonthStr);
   const [participated, setParticipated] = useState<boolean>(true);
   const [hours, setHours] = useState<string>('');
   const [studies, setStudies] = useState<string>('');
@@ -67,7 +73,7 @@ export function FieldReportsModule() {
   const [reportErrorMsg, setReportErrorMsg] = useState<string | null>(null);
 
   // Filter States for Secretary View
-  const [filterMonth, setFilterMonth] = useState<string>('2026-06');
+  const [filterMonth, setFilterMonth] = useState<string>(currentMonthStr);
   const [filterType, setFilterType] = useState<string>('all');
   const [publisherSearch, setPublisherSearch] = useState<string>('');
 
@@ -85,15 +91,25 @@ export function FieldReportsModule() {
   const [pubFormActive, setPubFormActive] = useState<boolean>(true);
   const [pubFormError, setPubFormError] = useState<string | null>(null);
 
-  // Month list helper (to pick reports for)
-  const availableMonths = [
-    { value: '2026-06', label: 'Junho de 2026' },
-    { value: '2026-05', label: 'Maio de 2026' },
-    { value: '2026-04', label: 'Abril de 2026' },
-    { value: '2026-03', label: 'Março de 2026' },
-    { value: '2026-02', label: 'Fevereiro de 2026' },
-    { value: '2026-01', label: 'Janeiro de 2026' },
-  ];
+  // Month list helper (to pick reports for) - dynamically generated 12 months in PT-BR
+  const availableMonths = React.useMemo(() => {
+    const list = [];
+    const base = new Date();
+    const monthNames = [
+      'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ];
+    for (let i = 0; i < 12; i++) {
+      const d = new Date(base.getFullYear(), base.getMonth() - i, 1);
+      const year = d.getFullYear();
+      const monthNum = String(d.getMonth() + 1).padStart(2, '0');
+      list.push({
+        value: `${year}-${monthNum}`,
+        label: `${monthNames[d.getMonth()]} de ${year}`
+      });
+    }
+    return list;
+  }, []);
 
   // Load publishers and reports
   const reloadData = async () => {

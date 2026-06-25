@@ -117,7 +117,10 @@ export async function fetchSchedulesFromDB(): Promise<{ weeks: SemanaProgramacao
     
     // Build canonical ID (YYYY-MM-DD format based on Monday offset)
     const buildIdFromWeek = (semanaVal: string): string => {
-      if (!semanaVal) return "2026-06-01";
+      if (!semanaVal) {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-01`;
+      }
       const parts = semanaVal.split('-');
       if (parts.length >= 3) {
         const year = parts[0];

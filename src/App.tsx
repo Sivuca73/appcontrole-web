@@ -30,16 +30,15 @@ import { AnimatePresence, motion } from 'motion/react';
 
 // Help find the Monday of the current week in YYYY-MM-DD
 function getMondayOfCurrentWeek(): string {
-  // We use the local time from additional metadata as mock/actual foundation (2026-06-01)
-  const baseDate = new Date("2026-06-01T02:40:45Z");
+  const baseDate = new Date();
   
-  const day = baseDate.getUTCDay();
-  const diff = baseDate.getUTCDate() - day + (day === 0 ? -6 : 1);
-  const monday = new Date(baseDate.setUTCDate(diff));
+  const day = baseDate.getDay();
+  const diff = baseDate.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(baseDate.setDate(diff));
   
-  const year = monday.getUTCFullYear();
-  const month = String(monday.getUTCMonth() + 1).padStart(2, '0');
-  const dateNum = String(monday.getUTCDate()).padStart(2, '0');
+  const year = monday.getFullYear();
+  const month = String(monday.getMonth() + 1).padStart(2, '0');
+  const dateNum = String(monday.getDate()).padStart(2, '0');
   return `${year}-${month}-${dateNum}`;
 }
 
